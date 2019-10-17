@@ -30,6 +30,7 @@ public class kuisioner_pg extends AppCompatActivity {
 
     private Button btnSubmitPG;
     private RadioButton rb1, rb2, rb3, rb4;
+    private  String jawaban="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,35 +54,36 @@ public class kuisioner_pg extends AppCompatActivity {
     }
 
     public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
-        // Check which radio button was clicked
         switch (view.getId()) {
             case R.id.rb1:
                 if (checked)
-                    // Pirates are the best
+                    jawaban = "A";
                     break;
             case R.id.rb2:
                 if (checked)
-                    // Ninjas rule
-                    break;
+                    jawaban = "B";
+
+                break;
             case R.id.rb3:
                 if (checked)
-                    // Ninjas rule
-                    break;
+                    jawaban = "C";
+
+                break;
             case R.id.rb4:
                 if (checked)
-                    // Ninjas rule
-                    break;
+                    jawaban = "D";
+
+                break;
         }
     }
 
 
     public void narikData(View view) {
         if ((Soal.listObj.size()) != (Soal.parameter)) {
-            Log.d("Hasil OBJ : ", ""+Soal.listObj.size());
-            Log.d("Hasil Parameter : ", ""+Soal.parameter);
+            Soal.listJawab.add(jawaban);
+//            Soal.listCode.add(getIntent().getStringExtra("code_kuisioner"));
             try {
                 JSONObject objData = Soal.listObj.get(Soal.parameter);
                 Soal.parameter++;
@@ -91,6 +93,8 @@ public class kuisioner_pg extends AppCompatActivity {
                 if (getJenisJawbaan.equals("isian")) {
                     Intent intent = new Intent(kuisioner_pg.this, KuesionerTipeInActivity.class);
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+
                     startActivity(intent);
                 } else if (getJenisJawbaan.equals("pilihan_ganda")) {
                     Intent intent = new Intent(kuisioner_pg.this, kuisioner_pg.class);
@@ -100,11 +104,13 @@ public class kuisioner_pg extends AppCompatActivity {
                     intent.putExtra("jawabD", objData.getString("pilihanD"));
 
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                     startActivity(intent);
                 } else if (getJenisJawbaan.equals("yesno")) {
                     Intent intent = new Intent(kuisioner_pg.this, kuisioner_yn.class);
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                     startActivity(intent);
                 } else if (getJenisJawbaan.equals("checkbox")) {
@@ -115,6 +121,7 @@ public class kuisioner_pg extends AppCompatActivity {
                     intent.putExtra("jawabC", objData.getString("pilihanCB3"));
                     intent.putExtra("jawabD", objData.getString("pilihanCB4"));
                     intent.putExtra("jawabE", objData.getString("pilihanCB5"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                     startActivity(intent);
                 }
