@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">E-Survey</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="pengelolaan">Pengelolaan</string>
+    <string name="profile">Profile</string>
+    <string name="kuesioner">Kuesioner</string>
+    <string name="desa">Desa</string>
+    <string name="nama">Nama</string>
+    <string name="usia">Usia</string>
+    <string name="kelamin">Jenis Kelamin</string>
+    <string name="profesi">Profesi</string>
+    <string name="start">Start</string>
+    <string name="pertanyaan">Pertanyaan</string>
+    <string name="please_wait">Please Wait...</string>
+    <string name="submit">Submit</string>
+    <string name="penghasilan">Penghasilan</string>
+    <string name="draft">Draft</string>
+    <string name="category">Kategori</string>
+    <string-array name="gender">
+        <item>Laki laki</item>
+        <item>Perempuan</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>

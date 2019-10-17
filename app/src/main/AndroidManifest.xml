@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.e_survey">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Activity.Home2"></activity>
+        <activity android:name=".Activity.kuisioner_cb" />
+        <activity android:name=".Activity.kuisioner_yn" />
+        <activity android:name=".KuisPG" />
+        <activity android:name=".Activity.kuisioner_pg" />
+        <activity android:name=".Activity.ScanActivity" />
+        <activity android:name=".Activity.FormKiosActivity" />
+        <activity android:name=".Activity.FormPetaniActivity" />
+        <activity android:name=".Activity.FormPenyuluhActivity" />
+        <activity android:name=".Activity.FormKelompokTaniActivity" />
+        <activity android:name=".Activity.DraftActivity" />
+        <activity android:name=".Activity.KuesionerTipeInActivity" />
+        <activity android:name=".Activity.KuesionerTipeRbActivity" />
+        <activity android:name=".Activity.KuesionerTipeYnActivity" />
+        <activity android:name=".Activity.HomeActivity" />
+        <activity android:name=".Activity.ListKiosActivity" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity android:name=".Activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

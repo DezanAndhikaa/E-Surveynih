@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground"
+    tools:context=".Activity.FormPenyuluhActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar"/>
+
+    <ScrollView
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:paddingLeft="16dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="30dp"
+            android:layout_marginTop="-20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Nama"/>
+                <EditText
+                    android:id="@+id/inNamaPenyuluh"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:background="@drawable/text_round"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="8pt"
+                    android:text="Alamat"/>
+                <EditText
+                    android:id="@+id/inAlamat"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textSize="8pt"
+                    android:maxLines="4"
+                    android:inputType="text"
+                    android:background="@drawable/text_round"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="No HP"/>
+                <EditText
+                    android:id="@+id/inNoHP"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:inputType="phone"
+                    android:background="@drawable/text_round"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Wilayah Kerja"/>
+                <RadioGroup
+                    android:id="@+id/rdGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:id="@+id/rdJumlahDesa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:text="Jumlah Desa    : "
+                            android:textSize="8pt"/>
+
+                        <EditText
+                            android:id="@+id/inJumlahDesa"
+                            android:layout_width="100dp"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="-45dp"
+                            android:layout_marginLeft="170dp"
+                            android:layout_marginBottom="15dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:textSize="8pt"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            android:background="@drawable/text_round"/>
+
+                        <RadioButton
+                            android:id="@+id/rdKlmpkTani"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kelompok Tani : "
+                            android:textSize="8pt"/>
+
+                        <EditText
+                            android:id="@+id/inKlmpkTani"
+                            android:layout_width="100dp"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="-30dp"
+                            android:layout_marginLeft="170dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:textSize="8pt"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:inputType="text"
+                            android:background="@drawable/text_round"/>
+
+                    </LinearLayout>
+                </RadioGroup>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"
+                android:text="Next"
+                android:textStyle="bold"
+                android:textSize="8pt"
+                android:textColor="@color/colorTextButton"
+                android:background="@drawable/button_round"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
