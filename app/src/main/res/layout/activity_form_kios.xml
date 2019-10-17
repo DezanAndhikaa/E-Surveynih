@@ -215,28 +215,31 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <RadioButton
-                            android:id="@+id/rb1"
+                            android:id="@+id/rbkios1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="50dp"
                             android:text="1"
                             android:textSize="8pt"
-                            android:checked="true"/>
+                            android:checked="true"
+                            android:onClick="kiosA"/>
 
                         <RadioButton
-                            android:id="@+id/rb2"
+                            android:id="@+id/rbkios2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="50dp"
                             android:text="2"
-                            android:textSize="8pt"/>
+                            android:textSize="8pt"
+                            android:onClick="kiosB"/>
 
                         <RadioButton
-                            android:id="@+id/rb3"
+                            android:id="@+id/rbkios3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="3"
-                            android:textSize="8pt"/>
+                            android:textSize="8pt"
+                            android:onClick="kiosC"/>
 
                     </LinearLayout>
                 </RadioGroup>

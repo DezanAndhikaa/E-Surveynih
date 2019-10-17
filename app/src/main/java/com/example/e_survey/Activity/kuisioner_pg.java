@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.e_survey.R;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +33,9 @@ public class kuisioner_pg extends AppCompatActivity {
 
     private Button btnSubmitPG;
     private RadioButton rb1, rb2, rb3, rb4;
+    private boolean answered;
+
+    RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,33 +56,35 @@ public class kuisioner_pg extends AppCompatActivity {
         rb4.setText(getIntent().getStringExtra("jawabD"));
 
 
+
+    }
+    public void radioA(View v) {
+        rb1.setChecked(true);
+        rb2.setChecked(false);
+        rb3.setChecked(false);
+        rb4.setChecked(false);
     }
 
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.rb1:
-                if (checked)
-                    // Pirates are the best
-                    break;
-            case R.id.rb2:
-                if (checked)
-                    // Ninjas rule
-                    break;
-            case R.id.rb3:
-                if (checked)
-                    // Ninjas rule
-                    break;
-            case R.id.rb4:
-                if (checked)
-                    // Ninjas rule
-                    break;
-        }
+    public void radioB(View v) {
+        rb1.setChecked(false);
+        rb2.setChecked(true);
+        rb3.setChecked(false);
+        rb4.setChecked(false);
     }
 
+    public void radioC(View v) {
+        rb1.setChecked(false);
+        rb2.setChecked(false);
+        rb3.setChecked(true);
+        rb4.setChecked(false);
+    }
+
+    public void radioD(View v) {
+        rb1.setChecked(false);
+        rb2.setChecked(false);
+        rb3.setChecked(false);
+        rb4.setChecked(true);
+    }
 
     public void narikData(View view) {
         if ((Soal.listObj.size()) != (Soal.parameter)) {

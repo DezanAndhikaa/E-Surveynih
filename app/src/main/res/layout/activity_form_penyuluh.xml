@@ -137,6 +137,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="15dp"
                             android:text="Jumlah Desa    : "
+                            android:onClick="penyuluhA"
                             android:textSize="8pt"/>
 
                         <EditText
@@ -152,14 +153,16 @@
                             android:maxLines="1"
                             android:singleLine="true"
                             android:inputType="number"
-                            android:background="@drawable/text_round"/>
+                            android:background="@drawable/text_round"
+                            />
 
                         <RadioButton
                             android:id="@+id/rdKlmpkTani"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Kelompok Tani : "
-                            android:textSize="8pt"/>
+                            android:textSize="8pt"
+                            android:onClick="penyuluhB"/>
 
                         <EditText
                             android:id="@+id/inKlmpkTani"
