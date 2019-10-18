@@ -75,6 +75,9 @@ public class HomeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch (i) {
                             case DialogInterface.BUTTON_POSITIVE:
+                                sharedPreferenceCustom.clearSharedPrefs();
+                                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                                startActivity(intent);
                                 finish();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -96,6 +99,9 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 switch (i) {
                     case DialogInterface.BUTTON_POSITIVE:
+                        sharedPreferenceCustom.clearSharedPrefs();
+                        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                        startActivity(intent);
                         finish();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
