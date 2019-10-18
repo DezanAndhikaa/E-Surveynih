@@ -13,12 +13,21 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.e_survey.R;
 import com.example.e_survey.Util.Constant;
 import com.example.e_survey.Util.SharedPreferenceCustom;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.example.e_survey.Util.Constant.KUESRB_URL;
 
 public class FormKelompokTaniActivity extends AppCompatActivity {
 
@@ -26,7 +35,7 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
     EditText inNamaKlmpkTani, inKetuaKlmpkTani, inLuasLahan, inKomoditasUtama, inJlhAnggota;
     TextView tv_toolbar;
     RadioGroup rdGroup;
-    RadioButton rdButton;
+    RadioButton rdButton,rb_tani1,rb_tani2;
     SharedPreferenceCustom sharedPreferenceCustom;
     private RadioButton rbkeltan1, rbkeltan2;
 
@@ -39,23 +48,8 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
         initFindView();
         hideKeyboardFrom();
-
-        rbkeltan1 = findViewById(R.id.rbkeltan1);
-        rbkeltan2 = findViewById(R.id.rbkeltan2);
-
-
-
-    }
-
-    public void radioA(View v) {
-        rbkeltan1.setChecked(true);
-        rbkeltan2.setChecked(false);
-    }
-
-    public void radioB(View v) {
-        rbkeltan1.setChecked(false);
-        rbkeltan2.setChecked(true);
-    }
+        rb_tani1 = findViewById(R.id.rb_tani1);
+        rb_tani2 = findViewById(R.id.rb_tani2);
 
     private void initFindView() {
         inNamaKlmpkTani = findViewById(R.id.inNamaKlmpkTani);
@@ -102,13 +96,12 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
                         }
 
                         sharedPreferenceCustom.putSharedPref(Constant.FORM_KEL_TANI, kelompoktani.toString());
+                        narikData2();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     sharedPreferenceCustom.putSharedPref(Constant.FORM_KEL_TANI, inNamaKlmpkTani.getText().toString());
 
-//                    Intent intent = new Intent(FormKelompokTaniActivity.this, KuesionerTipeCbActivity.class);
-//                    startActivity(intent);
                 }
             }
         });
@@ -121,5 +114,82 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
     public void checkButton(View view) {
         int selectedID = rdGroup.getCheckedRadioButtonId();
         rdButton = findViewById(selectedID);
+    }
+
+    void narikData2() {
+        Soal.listObj.clear();
+        RequestQueue req = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, KUESRB_URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray data = response.getJSONArray("data");
+                    Soal.parameter++;
+
+                    for (int a = 0; a < data.length(); a++) {
+                        JSONObject oData = data.getJSONObject(a);
+                        String kategori = oData.getString("nama_kategori_kuisioner");
+
+                        if (kategori.equals("Kelompok Tani")) {
+                            Soal.listObj.add(oData);
+                            Soal.listCode.add(oData.getString("code_kuisioner"));
+                        }
+                    }
+
+                    JSONObject objData = Soal.listObj.get(0);
+
+                    String getJenisJawbaan = objData.getString("jenis_pertanyaan");
+
+                    if (getJenisJawbaan.equals("isian")) {
+                        Intent intent = new Intent(FormKelompokTaniActivity.this, KuesionerTipeInActivity.class);
+                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        startActivity(intent);
+                    } else if (getJenisJawbaan.equals("pilihan_ganda")) {
+                        Intent intent = new Intent(FormKelompokTaniActivity.this, kuisioner_pg.class);
+                        intent.putExtra("jawabA", objData.getString("pilihanA"));
+                        intent.putExtra("jawabB", objData.getString("pilihanB"));
+                        intent.putExtra("jawabC", objData.getString("pilihanC"));
+                        intent.putExtra("jawabD", objData.getString("pilihanD"));
+
+                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        startActivity(intent);
+                    } else if (getJenisJawbaan.equals("yesno")) {
+                        Intent intent = new Intent(FormKelompokTaniActivity.this, kuisioner_yn.class);
+                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+
+                        startActivity(intent);
+                    } else if (getJenisJawbaan.equals("checkbox")) {
+                        Intent intent = new Intent(FormKelompokTaniActivity.this, kuisioner_cb.class);
+                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("jawabA", objData.getString("pilihanCB1"));
+                        intent.putExtra("jawabB", objData.getString("pilihanCB2"));
+                        intent.putExtra("jawabC", objData.getString("pilihanCB3"));
+                        intent.putExtra("jawabD", objData.getString("pilihanCB4"));
+                        intent.putExtra("jawabE", objData.getString("pilihanCB5"));
+
+                        startActivity(intent);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        req.add(request);
+    }
+
+    public void taniButtonA (View v){
+        rb_tani1.setChecked(true);
+        rb_tani2.setChecked(false);
+    }
+    public void taniButtonB (View v){
+        rb_tani1.setChecked(false);
+        rb_tani2.setChecked(true);
     }
 }

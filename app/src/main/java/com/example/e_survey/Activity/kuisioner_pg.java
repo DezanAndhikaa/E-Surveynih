@@ -33,6 +33,8 @@ public class kuisioner_pg extends AppCompatActivity {
 
     private Button btnSubmitPG;
     private RadioButton rb1, rb2, rb3, rb4;
+
+    private  String jawaban="";
     private boolean answered;
 
     RadioGroup radioGroup;
@@ -58,19 +60,19 @@ public class kuisioner_pg extends AppCompatActivity {
 
 
     }
+
     public void radioA(View v) {
         rb1.setChecked(true);
         rb2.setChecked(false);
         rb3.setChecked(false);
         rb4.setChecked(false);
     }
-
     public void radioB(View v) {
         rb1.setChecked(false);
         rb2.setChecked(true);
         rb3.setChecked(false);
         rb4.setChecked(false);
-    }
+
 
     public void radioC(View v) {
         rb1.setChecked(false);
@@ -88,8 +90,8 @@ public class kuisioner_pg extends AppCompatActivity {
 
     public void narikData(View view) {
         if ((Soal.listObj.size()) != (Soal.parameter)) {
-            Log.d("Hasil OBJ : ", ""+Soal.listObj.size());
-            Log.d("Hasil Parameter : ", ""+Soal.parameter);
+            Soal.listJawab.add(jawaban);
+//            Soal.listCode.add(getIntent().getStringExtra("code_kuisioner"));
             try {
                 JSONObject objData = Soal.listObj.get(Soal.parameter);
                 Soal.parameter++;
@@ -99,6 +101,8 @@ public class kuisioner_pg extends AppCompatActivity {
                 if (getJenisJawbaan.equals("isian")) {
                     Intent intent = new Intent(kuisioner_pg.this, KuesionerTipeInActivity.class);
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+
                     startActivity(intent);
                 } else if (getJenisJawbaan.equals("pilihan_ganda")) {
                     Intent intent = new Intent(kuisioner_pg.this, kuisioner_pg.class);
@@ -108,11 +112,13 @@ public class kuisioner_pg extends AppCompatActivity {
                     intent.putExtra("jawabD", objData.getString("pilihanD"));
 
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                     startActivity(intent);
                 } else if (getJenisJawbaan.equals("yesno")) {
                     Intent intent = new Intent(kuisioner_pg.this, kuisioner_yn.class);
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                     startActivity(intent);
                 } else if (getJenisJawbaan.equals("checkbox")) {
@@ -123,6 +129,7 @@ public class kuisioner_pg extends AppCompatActivity {
                     intent.putExtra("jawabC", objData.getString("pilihanCB3"));
                     intent.putExtra("jawabD", objData.getString("pilihanCB4"));
                     intent.putExtra("jawabE", objData.getString("pilihanCB5"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                     startActivity(intent);
                 }
