@@ -2,7 +2,9 @@ package com.example.e_survey.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,22 +19,34 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.e_survey.Model.Jawaban.JawabanModel;
 import com.example.e_survey.R;
+import com.example.e_survey.Util.Constant;
+import com.example.e_survey.Util.SharedPreferenceCustom;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import static com.example.e_survey.Util.Constant.KUESRB_URL;
 
 public class KuesionerTipeInActivity extends AppCompatActivity {
 
     private Button btnSubmit;
+    ArrayList<String> arrayListCodePilihan = new ArrayList<String>();
+    ArrayList<String> arrayListJawabanPilihan = new ArrayList<String>();
+    JawabanModel jawabanModel;
+    String json;
+    SharedPreferenceCustom sharedPreferenceCustom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kuesioner_tipe_in);
+        sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
         TextView textPertanyaan = (TextView) findViewById(R.id.tvPertanyaan);
         textPertanyaan.setText(getIntent().getStringExtra("soal"));
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -45,8 +59,8 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                     Log.d("Hasil OBJ : ", ""+Soal.listObj.size());
                     Log.d("Hasil Parameter : ", ""+Soal.parameter);
                     narikData();
-                }else{
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+                } else {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(KuesionerTipeInActivity.this);
 
                     alertDialogBuilder.setTitle("Upload Hasil Kuisioner?");
 
@@ -56,12 +70,16 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                             .setCancelable(false)
                             .setPositiveButton("Upload!",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
-
+                                    Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             })
                             .setNegativeButton("Draft!",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-
+                                    Intent intent = new Intent(KuesionerTipeInActivity.this, DraftActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             });
 
@@ -78,6 +96,7 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    JSONArray jsonArray = new JSONArray();
                     JSONArray data = response.getJSONArray("data");
                     JSONObject objData = Soal.listObj.get(Soal.parameter);
                     Soal.parameter++;
@@ -87,6 +106,7 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                     if(getJenisJawbaan.equals("isian")){
                         Intent intent = new Intent(KuesionerTipeInActivity.this, KuesionerTipeInActivity.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+
                         startActivity(intent);
                     }else if(getJenisJawbaan.equals("pilihan_ganda")){
                         Intent intent = new Intent(KuesionerTipeInActivity.this, kuisioner_pg.class);
