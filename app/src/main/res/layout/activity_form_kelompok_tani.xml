@@ -144,6 +144,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <RadioButton
+                            android:id="@+id/rbkeltan1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
@@ -152,7 +153,9 @@
                             android:onClick="taniButtonA"
                             android:id="@+id/rb_tani1"
                             android:checked="true"/>
+                      
                         <RadioButton
+                            android:id="@+id/rbkeltan2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
@@ -160,6 +163,7 @@
                             android:textSize="8pt"
                             android:id="@+id/rb_tani2"
                             android:onClick="taniButtonB"/>
+
                     </LinearLayout>
                 </RadioGroup>
             </LinearLayout>

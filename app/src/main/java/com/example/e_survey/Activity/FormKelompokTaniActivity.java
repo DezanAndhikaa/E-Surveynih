@@ -37,6 +37,9 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
     RadioGroup rdGroup;
     RadioButton rdButton,rb_tani1,rb_tani2;
     SharedPreferenceCustom sharedPreferenceCustom;
+    private RadioButton rbkeltan1, rbkeltan2;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,6 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
         hideKeyboardFrom();
         rb_tani1 = findViewById(R.id.rb_tani1);
         rb_tani2 = findViewById(R.id.rb_tani2);
-
-    }
 
     private void initFindView() {
         inNamaKlmpkTani = findViewById(R.id.inNamaKlmpkTani);

@@ -153,7 +153,8 @@
                             android:maxLines="1"
                             android:singleLine="true"
                             android:inputType="number"
-                            android:background="@drawable/text_round"/>
+                            android:background="@drawable/text_round"
+                            />
 
                         <RadioButton
                             android:id="@+id/rdKlmpkTani"

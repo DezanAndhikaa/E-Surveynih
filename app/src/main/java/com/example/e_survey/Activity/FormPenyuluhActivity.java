@@ -37,6 +37,7 @@ public class FormPenyuluhActivity extends AppCompatActivity {
     RadioGroup rdGroup;
     RadioButton rdButton,rdDesa,rdTani;
     SharedPreferenceCustom sharedPreferenceCustom;
+    private RadioButton rdJumlahDesa, rdKlmpkTani;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
