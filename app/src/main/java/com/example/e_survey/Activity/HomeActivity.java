@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;;
 
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,7 +19,8 @@ import com.example.e_survey.Util.SharedPreferenceCustom;
 public class HomeActivity extends AppCompatActivity {
 
     private TextView tv_toolbar;
-    LinearLayout ll_logout, ll_kios, ll_petani, ll_penyuluh, ll_klmpk_tani;
+    LinearLayout ll_kios, ll_petani, ll_penyuluh, ll_klmpk_tani;
+    ImageView iv_logout;
     SharedPreferenceCustom sharedPreferenceCustom;
     Context context;
 
@@ -29,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
 //        Loader load = new Loader();
         tv_toolbar = findViewById(R.id.tv_toolbar);
-        ll_logout = findViewById(R.id.ll_logout);
+        iv_logout = findViewById(R.id.iv_logout);
         ll_kios = findViewById(R.id.ll_kios);
         ll_petani = findViewById(R.id.ll_petani);
         ll_penyuluh = findViewById(R.id.ll_penyuluh);
@@ -65,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(prof_klmpk_tani);
             }
         });
-        ll_logout.setOnClickListener(new View.OnClickListener() {
+        iv_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogInterface.OnClickListener dialogClicker = new DialogInterface.OnClickListener() {
