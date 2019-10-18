@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Soal {
     public static int parameter;
+
     public static String soal;
     public static String kategoriKuis;
     public static ArrayList<JSONObject> listObj = new ArrayList<JSONObject>();

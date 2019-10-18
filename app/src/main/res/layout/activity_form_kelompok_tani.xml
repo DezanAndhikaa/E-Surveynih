@@ -149,7 +149,8 @@
                             android:layout_marginBottom="6dp"
                             android:text="Berbadan Hukum"
                             android:textSize="8pt"
-                            android:onClick="checkButton"
+                            android:onClick="taniButtonA"
+                            android:id="@+id/rb_tani1"
                             android:checked="true"/>
                         <RadioButton
                             android:layout_width="wrap_content"
@@ -157,7 +158,8 @@
                             android:layout_marginBottom="5dp"
                             android:text="Tidak Berbadan Hukum"
                             android:textSize="8pt"
-                            android:onClick="checkButton"/>
+                            android:id="@+id/rb_tani2"
+                            android:onClick="taniButtonB"/>
                     </LinearLayout>
                 </RadioGroup>
             </LinearLayout>

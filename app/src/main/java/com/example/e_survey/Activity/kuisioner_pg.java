@@ -53,30 +53,32 @@ public class kuisioner_pg extends AppCompatActivity {
 
     }
 
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
+    public void radioA(View v) {
+        rb1.setChecked(true);
+        rb2.setChecked(false);
+        rb3.setChecked(false);
+        rb4.setChecked(false);
+    }
 
-        switch (view.getId()) {
-            case R.id.rb1:
-                if (checked)
-                    jawaban = "A";
-                    break;
-            case R.id.rb2:
-                if (checked)
-                    jawaban = "B";
+    public void radioB(View v) {
+        rb1.setChecked(false);
+        rb2.setChecked(true);
+        rb3.setChecked(false);
+        rb4.setChecked(false);
+    }
 
-                break;
-            case R.id.rb3:
-                if (checked)
-                    jawaban = "C";
+    public void radioC(View v) {
+        rb1.setChecked(false);
+        rb2.setChecked(false);
+        rb3.setChecked(true);
+        rb4.setChecked(false);
+    }
 
-                break;
-            case R.id.rb4:
-                if (checked)
-                    jawaban = "D";
-
-                break;
-        }
+    public void radioD(View v) {
+        rb1.setChecked(false);
+        rb2.setChecked(false);
+        rb3.setChecked(false);
+        rb4.setChecked(true);
     }
 
 

@@ -109,26 +109,6 @@ public class FormPetaniActivity extends AppCompatActivity {
                         kelompoktani.put("komoditas", inKomoditas.getText().toString());
 
                         sharedPreferenceCustom.putSharedPref(Constant.FORM_PETANI, kelompoktani.toString());
-////                        Log.d("Data JSON: ", kelompoktani.toString());
-//                        List objList = new ArrayList();
-//                        objList.add("obj1");
-//                        objList.add("obj2");
-//                        objList.add("obj3");
-//                        List objList2 = new ArrayList();
-//                        objList2.add("obj1");
-//                        objList2.add("obj2");
-//                        objList2.add("obj3");
-//                        String append = "{";
-//                        for (int x = 0; x < objList.size(); x++) {
-//
-//                            append += "\""+ objList.get(x) + "\":" + "\"" + objList2.get(x) + "\",";
-//                            if (x == (objList.size() - 1)){
-//                                append += "\""+ objList.get(x) + "\":" + "\"" + objList2.get(x) + "\"}";
-////                                append += "}";
-//                            }
-//                        }
-////                        Log.d("Value Identitas : " , kelompoktani.toString());
-////                        Log.d("Value Jawaban : " , append);
                     } catch (JSONException e) {
 
                         e.printStackTrace();
@@ -208,6 +188,7 @@ public class FormPetaniActivity extends AppCompatActivity {
     }
 
     void narikData2() {
+        Soal.listObj.clear();
         RequestQueue req = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, KUESRB_URL, null, new Response.Listener<JSONObject>() {
             @Override
