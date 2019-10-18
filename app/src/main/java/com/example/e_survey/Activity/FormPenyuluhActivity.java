@@ -28,6 +28,7 @@ public class FormPenyuluhActivity extends AppCompatActivity {
     RadioGroup rdGroup;
     RadioButton rdButton;
     SharedPreferenceCustom sharedPreferenceCustom;
+    private RadioButton rdJumlahDesa, rdKlmpkTani;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,22 @@ public class FormPenyuluhActivity extends AppCompatActivity {
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
         initFindView();
         hideKeyboardFrom();
+
+        rdJumlahDesa = findViewById(R.id.rdJumlahDesa);
+        rdKlmpkTani = findViewById(R.id.rdKlmpkTani);
+
+//        rdJumlahDesa.setText(getIntent().getStringExtra("Jumlah Desa"));
+//        rdJumlahDesa.setText(getIntent().getStringExtra("Kelompok Desa"));
+    }
+
+    public void penyuluhA(View v) {
+        rdJumlahDesa.setChecked(true);
+        rdKlmpkTani.setChecked(false);
+    }
+
+    public void penyuluhB(View v) {
+        rdJumlahDesa.setChecked(false);
+        rdKlmpkTani.setChecked(true);
     }
 
     private void initFindView() {

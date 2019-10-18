@@ -28,6 +28,9 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
     RadioGroup rdGroup;
     RadioButton rdButton;
     SharedPreferenceCustom sharedPreferenceCustom;
+    private RadioButton rbkeltan1, rbkeltan2;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,22 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
         initFindView();
         hideKeyboardFrom();
+
+        rbkeltan1 = findViewById(R.id.rbkeltan1);
+        rbkeltan2 = findViewById(R.id.rbkeltan2);
+
+
+
+    }
+
+    public void radioA(View v) {
+        rbkeltan1.setChecked(true);
+        rbkeltan2.setChecked(false);
+    }
+
+    public void radioB(View v) {
+        rbkeltan1.setChecked(false);
+        rbkeltan2.setChecked(true);
     }
 
     private void initFindView() {
