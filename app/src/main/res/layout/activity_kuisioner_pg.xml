@@ -58,7 +58,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:onClick="onRadioButtonClicked"
+                            android:onClick="radioA"
                             android:text="A" />
 
                         <RadioButton
@@ -66,7 +66,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:onClick="onRadioButtonClicked"
+                            android:onClick="radioB"
                             android:text="B" />
 
                         <RadioButton
@@ -74,7 +74,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:onClick="onRadioButtonClicked"
+                            android:onClick="radioC"
                             android:text="C" />
 
                         <RadioButton
@@ -82,7 +82,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:onClick="onRadioButtonClicked"
+                            android:onClick="radioD"
                             android:text="D" />
 
                     </LinearLayout>

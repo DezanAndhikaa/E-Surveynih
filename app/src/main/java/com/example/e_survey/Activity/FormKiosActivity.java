@@ -36,6 +36,7 @@ public class FormKiosActivity extends AppCompatActivity {
     String role = "";
     RadioGroup rdGroup;
     RadioButton rdButton;
+    private RadioButton rbkios1, rbkios2, rbkios3;
 
 
     @Override
@@ -50,7 +51,32 @@ public class FormKiosActivity extends AppCompatActivity {
                 Kios();
             }
         });
+
+        rbkios1 = findViewById(R.id.rbkios1);
+        rbkios2 = findViewById(R.id.rbkios2);
+        rbkios2 = findViewById(R.id.rbkios3);
+
     }
+
+
+    public void kiosA(View v) {
+        rbkios1.setChecked(true);
+        rbkios2.setChecked(false);
+        rbkios3.setChecked(false);
+    }
+
+    public void kiosB(View v) {
+        rbkios1.setChecked(false);
+        rbkios2.setChecked(true);
+        rbkios3.setChecked(false);
+    }
+
+    public void kiosC(View v) {
+        rbkios1.setChecked(false);
+        rbkios2.setChecked(false);
+        rbkios3.setChecked(true);
+    }
+
 
     private void Kios() {
         final String namaKios = this.inNamaKios.getText().toString().trim();
