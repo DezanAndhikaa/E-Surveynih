@@ -7,6 +7,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorBar">#32cd32</color>
     <color name="colorButton">#32cd32</color>
-    <color name="colorTextButton">#494949</color>
-    <color name="colorBackground">#6FFF70</color>
+    <color name="colorTextButton">#000000</color>
+    <color name="colorBackground">#52c234</color>
+    <color name="colorText">#000000</color>
 </resources>
