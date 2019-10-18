@@ -45,6 +45,8 @@ public class FormPenyuluhActivity extends AppCompatActivity {
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
         initFindView();
         hideKeyboardFrom();
+        rdTani = findViewById(R.id.rdKlmpkTani);
+        rdDesa = findViewById(R.id.rdJumlahDesa);
     }
 
     private void initFindView() {
@@ -91,11 +93,18 @@ public class FormPenyuluhActivity extends AppCompatActivity {
                     }
                     sharedPreferenceCustom.putSharedPref(Constant.FORM_PENYULUH, inNamaPenyuluh.getText().toString());
                     narikData2();
-//                    Intent intent = new Intent(FormPenyuluhActivity.this, KuesionerTipeRbActivity.class);
-//                    startActivity(intent);
                 }
             }
         });
+    }
+
+    public void rdDesaVoid (View v){
+        rdDesa.setChecked(true);
+        rdTani.setChecked(false);
+    }
+    public void rdTaniVoid (View v){
+        rdDesa.setChecked(false);
+        rdTani.setChecked(true);
     }
 
     public void hideKeyboardFrom() {
@@ -170,12 +179,5 @@ public class FormPenyuluhActivity extends AppCompatActivity {
         req.add(request);
     }
 
-    public void rdDesa (View v){
-        rdDesa.setChecked(true);
-        rdTani.setChecked(false);
-    }
-    public void rdTani (View v){
-        rdDesa.setChecked(false);
-        rdTani.setChecked(true);
-    }
+
 }

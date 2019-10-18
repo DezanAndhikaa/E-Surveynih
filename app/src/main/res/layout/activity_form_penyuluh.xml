@@ -137,7 +137,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="15dp"
                             android:text="Jumlah Desa    : "
-                            android:onClick="rdDesa"
+                            android:onClick="rdDesaVoid"
                             android:textSize="8pt"/>
 
                         <EditText
@@ -160,7 +160,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Kelompok Tani : "
-                            android:onClick="rdTani"
+                            android:onClick="rdTaniVoid"
                             android:textSize="8pt"/>
 
                         <EditText

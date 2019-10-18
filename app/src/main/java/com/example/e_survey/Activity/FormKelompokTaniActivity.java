@@ -45,6 +45,9 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
         initFindView();
         hideKeyboardFrom();
+        rb_tani1 = findViewById(R.id.rb_tani1);
+        rb_tani2 = findViewById(R.id.rb_tani2);
+
     }
 
     private void initFindView() {
