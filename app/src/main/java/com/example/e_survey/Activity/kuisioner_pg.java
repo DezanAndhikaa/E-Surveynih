@@ -73,7 +73,7 @@ public class kuisioner_pg extends AppCompatActivity {
         rb3.setChecked(false);
         rb4.setChecked(false);
 
-
+    }
     public void radioC(View v) {
         rb1.setChecked(false);
         rb2.setChecked(false);
@@ -147,11 +147,18 @@ public class kuisioner_pg extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("Upload!",new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,int id) {
-
+                            Intent intent = new Intent(kuisioner_pg.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                            Toast.makeText(kuisioner_pg.this, "Berhasil di Upload!", Toast.LENGTH_LONG).show();
                         }
                     })
                     .setNegativeButton("Draft!",new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(kuisioner_pg.this, DraftActivity.class);
+                            startActivity(intent);
+                            finish();
+                            Toast.makeText(kuisioner_pg.this, "Berhasil di Menjadikan Draft!", Toast.LENGTH_LONG).show();
 
                         }
                     });

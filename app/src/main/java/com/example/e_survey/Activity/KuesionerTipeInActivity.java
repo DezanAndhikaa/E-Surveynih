@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,13 +59,20 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                             .setMessage("Jika tidak ada koneksi silahkan pilih menu 'Draft'")
                             .setIcon(R.mipmap.ic_launcher)
                             .setCancelable(false)
-                            .setPositiveButton("Upload!", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-
+                            .setPositiveButton("Upload!",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                    Toast.makeText(KuesionerTipeInActivity.this, "Berhasil di Upload!", Toast.LENGTH_LONG).show();
                                 }
                             })
-                            .setNegativeButton("Draft!", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Draft!",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    Intent intent = new Intent(KuesionerTipeInActivity.this, DraftActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                    Toast.makeText(KuesionerTipeInActivity.this, "Berhasil di Menjadikan Draft!", Toast.LENGTH_LONG).show();
 
                                 }
                             });

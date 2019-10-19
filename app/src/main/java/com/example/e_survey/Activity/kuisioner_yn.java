@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -103,62 +104,21 @@ public class kuisioner_yn extends AppCompatActivity {
                     .setMessage("Jika tidak ada koneksi silahkan pilih menu 'Draft'")
                     .setIcon(R.mipmap.ic_launcher)
                     .setCancelable(false)
-                    .setPositiveButton("Upload!", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
+                    .setPositiveButton("Upload!",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            Intent intent = new Intent(kuisioner_yn.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                            Toast.makeText(kuisioner_yn.this, "Berhasil di Upload!", Toast.LENGTH_LONG).show();
                         }
                     })
-                    .setNegativeButton("Draft!", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Draft!",new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            String append = "{";
-                            if (rb1.isChecked()) {
-                                jawaban = "Benar";
-                            } else if (rb2.isChecked()) {
-                                jawaban = "Salah";
-                            }
+                            Intent intent = new Intent(kuisioner_yn.this, DraftActivity.class);
+                            startActivity(intent);
+                            finish();
+                            Toast.makeText(kuisioner_yn.this, "Berhasil di Menjadikan Draft!", Toast.LENGTH_LONG).show();
 
-                            Soal.listJawab.add(jawaban);
-                            for (int x = 0; x < Soal.listCode.size(); x++) {
-                                Log.d("Coba Code: ", ""+Soal.listCode.get(x));
-                                Log.d("Coba Jawab: ", ""+Soal.listJawab.get(x));
-
-                            }
-//                            Log.d("TAG-A",""+Soal.listCode.size());
-//                            Log.d("TAG-B",""+Soal.listJawab.size());
-
-
-//                            String append = "{";
-//                            for (int x = 0; x < Soal.listJawab.size(); x++) {
-//
-//                                append += "\"" + Soal.listCode.get(x) + "\":" + "\"" + Soal.listJawab.get(x) + "\",";
-//                                if (x == (Soal.listJawab.size() - 1)) {
-//                                    append += "\"" + Soal.listCode.get(x) + "\":" + "\"" + Soal.listJawab.get(x) + "\"}";
-//
-//                                }
-//                            }
-//                            RequestQueue MyRequestQueue = Volley.newRequestQueue(getApplicationContext());
-//
-//                            String url = "http://survey-kartutani.com/api/tambah_hasilpetani";
-//                            StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-//                                @Override
-//                                public void onResponse(String response) {
-//
-//                                }
-//                            }, new Response.ErrorListener() {
-//                                @Override
-//                                public void onErrorResponse(VolleyError error) {
-//
-//                                }
-//                            }) {
-//                                protected Map<String, String> getParams() {
-//                                    Map<String, String> MyData = new HashMap<String, String>();
-//                                    for(int x =0;x<Soal.listCode.size();x++){
-//                                        MyData.put(""+Soal.listCode.get(x), ""+Soal.listJawab.get(x));
-//                                    }
-//                                    return MyData;
-//                                }
-//                            };
-//                            MyRequestQueue.add(MyStringRequest);
                         }
                     });
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -137,13 +138,20 @@ public class kuisioner_cb extends AppCompatActivity {
                     .setMessage("Jika tidak ada koneksi silahkan pilih menu 'Draft'")
                     .setIcon(R.mipmap.ic_launcher)
                     .setCancelable(false)
-                    .setPositiveButton("Upload!", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
+                    .setPositiveButton("Upload!",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            Intent intent = new Intent(kuisioner_cb.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                            Toast.makeText(kuisioner_cb.this, "Berhasil di Upload!", Toast.LENGTH_LONG).show();
                         }
                     })
-                    .setNegativeButton("Draft!", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Draft!",new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(kuisioner_cb.this, DraftActivity.class);
+                            startActivity(intent);
+                            finish();
+                            Toast.makeText(kuisioner_cb.this, "Berhasil di Menjadikan Draft!", Toast.LENGTH_LONG).show();
 
                         }
                     });
