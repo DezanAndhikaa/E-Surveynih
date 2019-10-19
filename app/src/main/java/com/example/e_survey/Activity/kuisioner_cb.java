@@ -29,6 +29,7 @@ import static com.example.e_survey.Util.Constant.KUESRB_URL;
 
 public class kuisioner_cb extends AppCompatActivity {
     private CheckBox cb1, cb2, cb3, cb4, cb5;
+    String jawaban = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,34 @@ public class kuisioner_cb extends AppCompatActivity {
     }
 
     public void narikData(View view) {
-        if((Soal.listObj.size()) != (Soal.parameter)){
-            Log.d("Hasil OBJ : ", ""+Soal.listObj.size());
-            Log.d("Hasil Parameter : ", ""+Soal.parameter);
+
+
+        if (cb1.isChecked()) {
+            jawaban +=  "A,";
+        }
+        if (cb2.isChecked()) {
+            jawaban +=  "B,";
+
+        }
+        if (cb3.isChecked()) {
+            jawaban +=  "C,";
+
+        }
+        if (cb4.isChecked()) {
+            jawaban +=  "D,";
+
+        }
+
+        if (cb5.isChecked()) {
+            jawaban +=  "D,";
+
+        }
+
+        Soal.listJawab.add(jawaban);
+//        Soal.listCode.add(getIntent().getStringExtra("code_kuisioner"));
+
+        if ((Soal.listObj.size()) != (Soal.parameter)) {
+
             try {
 
                 JSONObject objData = Soal.listObj.get(Soal.parameter);
@@ -67,6 +93,8 @@ public class kuisioner_cb extends AppCompatActivity {
                 if (getJenisJawbaan.equals("isian")) {
                     Intent intent = new Intent(kuisioner_cb.this, KuesionerTipeInActivity.class);
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+
                     startActivity(intent);
                 } else if (getJenisJawbaan.equals("pilihan_ganda")) {
                     Intent intent = new Intent(kuisioner_cb.this, kuisioner_pg.class);
@@ -74,6 +102,7 @@ public class kuisioner_cb extends AppCompatActivity {
                     intent.putExtra("jawabB", objData.getString("pilihanB"));
                     intent.putExtra("jawabC", objData.getString("pilihanC"));
                     intent.putExtra("jawabD", objData.getString("pilihanD"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
 
@@ -81,6 +110,7 @@ public class kuisioner_cb extends AppCompatActivity {
                 } else if (getJenisJawbaan.equals("yesno")) {
                     Intent intent = new Intent(kuisioner_cb.this, kuisioner_yn.class);
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                     startActivity(intent);
                 } else if (getJenisJawbaan.equals("checkbox")) {
@@ -91,13 +121,14 @@ public class kuisioner_cb extends AppCompatActivity {
                     intent.putExtra("jawabC", objData.getString("pilihanCB3"));
                     intent.putExtra("jawabD", objData.getString("pilihanCB4"));
                     intent.putExtra("jawabE", objData.getString("pilihanCB5"));
+                    intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                     startActivity(intent);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
             alertDialogBuilder.setTitle("Upload Hasil Kuisioner?");
@@ -106,12 +137,12 @@ public class kuisioner_cb extends AppCompatActivity {
                     .setMessage("Jika tidak ada koneksi silahkan pilih menu 'Draft'")
                     .setIcon(R.mipmap.ic_launcher)
                     .setCancelable(false)
-                    .setPositiveButton("Upload!",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                    .setPositiveButton("Upload!", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
                         }
                     })
-                    .setNegativeButton("Draft!",new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Draft!", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
 
                         }

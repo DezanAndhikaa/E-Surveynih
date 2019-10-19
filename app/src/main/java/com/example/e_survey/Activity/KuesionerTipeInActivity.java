@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -28,6 +29,7 @@ import static com.example.e_survey.Util.Constant.KUESRB_URL;
 public class KuesionerTipeInActivity extends AppCompatActivity {
 
     private Button btnSubmit;
+    private EditText jawaban;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +38,18 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
         TextView textPertanyaan = (TextView) findViewById(R.id.tvPertanyaan);
         textPertanyaan.setText(getIntent().getStringExtra("soal"));
         btnSubmit = findViewById(R.id.btnSubmit);
+        jawaban = findViewById(R.id.inJawaban);
+//        Soal.listCode.add(getIntent().getStringExtra("code_kuisioner"));
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if((Soal.listObj.size()) != (Soal.parameter)){
-                    Log.d("Hasil OBJ : ", ""+Soal.listObj.size());
-                    Log.d("Hasil Parameter : ", ""+Soal.parameter);
+                if ((Soal.listObj.size()) != (Soal.parameter)) {
+
                     narikData();
-                }else{
+
+                } else {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
 
                     alertDialogBuilder.setTitle("Upload Hasil Kuisioner?");
@@ -54,12 +58,12 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                             .setMessage("Jika tidak ada koneksi silahkan pilih menu 'Draft'")
                             .setIcon(R.mipmap.ic_launcher)
                             .setCancelable(false)
-                            .setPositiveButton("Upload!",new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
+                            .setPositiveButton("Upload!", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
                                 }
                             })
-                            .setNegativeButton("Draft!",new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Draft!", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
 
                                 }
@@ -73,6 +77,8 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
     }
 
     public void narikData() {
+        Soal.listJawab.add(jawaban.getText());
+
         RequestQueue req = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, KUESRB_URL, null, new Response.Listener<JSONObject>() {
             @Override
@@ -80,30 +86,35 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                 try {
                     JSONArray data = response.getJSONArray("data");
                     JSONObject objData = Soal.listObj.get(Soal.parameter);
+
                     Soal.parameter++;
 
                     String getJenisJawbaan = objData.getString("jenis_pertanyaan");
 
-                    if(getJenisJawbaan.equals("isian")){
+                    if (getJenisJawbaan.equals("isian")) {
                         Intent intent = new Intent(KuesionerTipeInActivity.this, KuesionerTipeInActivity.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+
                         startActivity(intent);
-                    }else if(getJenisJawbaan.equals("pilihan_ganda")){
+                    } else if (getJenisJawbaan.equals("pilihan_ganda")) {
                         Intent intent = new Intent(KuesionerTipeInActivity.this, kuisioner_pg.class);
                         intent.putExtra("jawabA", objData.getString("pilihanA"));
                         intent.putExtra("jawabB", objData.getString("pilihanB"));
                         intent.putExtra("jawabC", objData.getString("pilihanC"));
                         intent.putExtra("jawabD", objData.getString("pilihanD"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
 
                         startActivity(intent);
-                    }else if(getJenisJawbaan.equals("yesno")){
+                    } else if (getJenisJawbaan.equals("yesno")) {
                         Intent intent = new Intent(KuesionerTipeInActivity.this, kuisioner_yn.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                         startActivity(intent);
-                    }else if(getJenisJawbaan.equals("checkbox")){
+                    } else if (getJenisJawbaan.equals("checkbox")) {
                         Intent intent = new Intent(KuesionerTipeInActivity.this, kuisioner_cb.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
                         intent.putExtra("jawabA", objData.getString("pilihanCB1"));
@@ -111,6 +122,7 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                         intent.putExtra("jawabC", objData.getString("pilihanCB3"));
                         intent.putExtra("jawabD", objData.getString("pilihanCB4"));
                         intent.putExtra("jawabE", objData.getString("pilihanCB5"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                         startActivity(intent);
                     }

@@ -18,9 +18,28 @@
 s
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="278dp"
+                android:layout_height="wrap_content"
                 android:weightSum="1"
-                android:background="@drawable/gradient_menu"/>
+                android:background="@drawable/gradient_menu">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="71dp"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_weight="2"
+                        android:text="OPTIMALISASI KARTU TANI"
+                        android:textColor="#FFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
 
