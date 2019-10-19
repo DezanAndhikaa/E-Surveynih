@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#8723EE">
+        android:background="#ffff">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -19,8 +19,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:background="@drawable/text_round"
+                android:layout_marginTop="100dp"
                 android:orientation="vertical"
                 android:padding="12dp">
 
@@ -62,20 +61,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/cb5"/>
-                <Button
-                    android:id="@+id/btnSubmitPG"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/button_round"
-                    android:text="Next"
-                    android:textColor="@color/colorTextButton"
-                    android:textSize="8pt"
-                    android:onClick="narikData"
-                    android:textStyle="bold"/>
 
             </LinearLayout>
         </ScrollView>
+        <Button
+            android:id="@+id/btnSubmitPG"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="300dp"
+            android:background="@drawable/button_round"
+            android:text="Next"
+            android:textColor="@color/colorTextButton"
+            android:textSize="8pt"
+            android:onClick="narikData"
+            android:textStyle="bold"/>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,12 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBackground"
+    android:background="#ffff"
     tools:context=".Activity.KuesionerTipeInActivity">
 
-    <include
-        layout="@layout/layout_toolbar"
-        android:id="@+id/toolbar"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,11 +16,10 @@
 
         <LinearLayout
             android:padding="12dp"
-            android:layout_margin="12dp"
+            android:layout_marginTop="100dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/text_round">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvPosisi"
@@ -47,18 +43,19 @@
                 android:paddingRight="5dp"
                 android:hint="Isi kolom ini"/>
 
-            <Button
-                android:id="@+id/btnSubmit"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_gravity="center"
-                android:text="Next"
-                android:textStyle="bold"
-                android:textSize="8pt"
-                android:textColor="@color/colorTextButton"
-                android:background="@drawable/button_round"/>
 
         </LinearLayout>
     </ScrollView>
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="420dp"
+        android:layout_gravity="center"
+        android:text="Next"
+        android:textStyle="bold"
+        android:textSize="8pt"
+        android:textColor="@color/colorTextButton"
+        android:background="@drawable/button_round"/>
+
 </LinearLayout>
