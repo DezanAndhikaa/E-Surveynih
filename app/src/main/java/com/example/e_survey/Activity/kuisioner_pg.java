@@ -66,19 +66,21 @@ public class kuisioner_pg extends AppCompatActivity {
         rb2.setChecked(false);
         rb3.setChecked(false);
         rb4.setChecked(false);
+        jawaban = "A";
     }
     public void radioB(View v) {
         rb1.setChecked(false);
         rb2.setChecked(true);
         rb3.setChecked(false);
         rb4.setChecked(false);
-
+        jawaban = "B";
     }
     public void radioC(View v) {
         rb1.setChecked(false);
         rb2.setChecked(false);
         rb3.setChecked(true);
         rb4.setChecked(false);
+        jawaban = "C";
     }
 
     public void radioD(View v) {
@@ -86,12 +88,17 @@ public class kuisioner_pg extends AppCompatActivity {
         rb2.setChecked(false);
         rb3.setChecked(false);
         rb4.setChecked(true);
+        jawaban = "D";
     }
 
     public void narikData(View view) {
         if ((Soal.listObj.size()) != (Soal.parameter)) {
             Soal.listJawab.add(jawaban);
-//            Soal.listCode.add(getIntent().getStringExtra("code_kuisioner"));
+            Soal.listCode.add(getIntent().getStringExtra("kode_soal"));
+
+            Log.d("Tag Kode Soal : " , getIntent().getStringExtra("kode_soal"));
+            Log.d("Tag Jawaban : " , jawaban);
+
             try {
                 JSONObject objData = Soal.listObj.get(Soal.parameter);
                 Soal.parameter++;

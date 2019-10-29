@@ -56,10 +56,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
+                            android:onClick="cek"
                             android:text="Benar" />
 
                         <RadioButton
                             android:id="@+id/rb_cek2"
+                            android:onClick="cek"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"

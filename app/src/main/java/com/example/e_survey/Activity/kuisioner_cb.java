@@ -80,7 +80,10 @@ public class kuisioner_cb extends AppCompatActivity {
         }
 
         Soal.listJawab.add(jawaban);
-//        Soal.listCode.add(getIntent().getStringExtra("code_kuisioner"));
+        Soal.listCode.add(getIntent().getStringExtra("kode_soal"));
+
+        Log.d("Tag Kode Soal : " , getIntent().getStringExtra("kode_soal"));
+        Log.d("Tag Jawaban : " , jawaban);
 
         if ((Soal.listObj.size()) != (Soal.parameter)) {
 
@@ -104,7 +107,6 @@ public class kuisioner_cb extends AppCompatActivity {
                     intent.putExtra("jawabC", objData.getString("pilihanC"));
                     intent.putExtra("jawabD", objData.getString("pilihanD"));
                     intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
-
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
 
                     startActivity(intent);

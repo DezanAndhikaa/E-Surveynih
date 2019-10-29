@@ -28,10 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText username,password;
+    private EditText username, password;
     private Button btn_login;
     SharedPreferenceCustom sharedPreferenceCustom;
 
@@ -73,58 +72,16 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
                             boolean error = jsonObject.getBoolean("error");
-//                           JSONArray jsonArray = jsonObject.getJSONArray("login");
-//                            JSONArray jsonArray = jsonObject.getJSONArray("id_management");
-//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-//                            if (success.equals("1")) {
+                            String dataNih = jsonObject.getString("data");
+                            JSONObject jData = new JSONObject(dataNih);
                             if (!error) {
-
-//                                for (int i = 0; i < jsonArray.length(); i++) {
-
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-
-//                                    LoginModel loginModel = new LoginModel();
-
-//                                    int id_fascam = object.getInt("id_fascam");
-//                                    String jenis_user = object.getString("jenis_user").trim();
-//                                    String username = object.getString("username").trim();
-                                    sharedPreferenceCustom.putSharedPref(Constant.USERNAME, username);
-//                                    String password = object.getString("password").trim();
-//                                    String nama = object.getString("nama").trim();
-//                                    int created_at = object.getInt("created_at");
-//                                    int updated_at = object.getInt("updated_at");
-//                                    int kode_qr = object.getInt("kode_qr");
-//                                    String kabupaten = object.getString("kabupaten").trim();
-//                                    String kecamatan = object.getString("kecamatan").trim();
-//                                    String desa = object.getString("desa").trim();
-//                                    String nama_kios = object.getString("nama_kios").trim();
-
-//                                    loginModel.setId_fascam(id_fascam);
-//                                    loginModel.setJenis_user(jenis_user);
-//                                    loginModel.setUsername(username);
-//                                    loginModel.setPassword(password);
-//                                    loginModel.setNama(nama);
-//                                    loginModel.setCreated_at(created_at);
-//                                    loginModel.setUpdated_at(updated_at);
-//                                    loginModel.setKode_qr(kode_qr);
-//                                    loginModel.setKabupaten(kabupaten);
-//                                    loginModel.setKecamatan(kecamatan);
-//                                    loginModel.setDesa(desa);
-//                                    loginModel.setNama_kios(nama_kios);
-
-                                    Intent login = new Intent(LoginActivity.this, HomeActivity.class );
-                                    startActivity(login);
-
-
-
-                                }
-//                            }else if (success.equals("0")) {
-                            else if (!error) {
-                                    Toast.makeText(LoginActivity.this, "Username Salah", Toast.LENGTH_SHORT).show();
-
+                                sharedPreferenceCustom.putSharedPref(Constant.USERNAME, username);
+                                Soal.idManagement = jData.getString("id_management");
+                                Intent login = new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(login);
+                            } else if (!error) {
+                                Toast.makeText(LoginActivity.this, "Username Salah", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -135,25 +92,22 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this,"\t\t\t\tLogin Failed\nCheck Your Connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "\t\t\t\tLogin Failed\nCheck Your Connection", Toast.LENGTH_SHORT).show();
                     }
-                })
-
-
-        {
-           @Override
-           protected Map<String, String> getParams() throws AuthFailureError {
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", username);
                 params.put("password", password);
                 return params;
-           }
+            }
 
-           @Override
-           public String getBodyContentType() {
+            @Override
+            public String getBodyContentType() {
                 return "application/x-www-form-urlencoded; charset=UTF-8";
-        }
-    };
+            }
+        };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);

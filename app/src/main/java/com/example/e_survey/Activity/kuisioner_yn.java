@@ -45,19 +45,31 @@ public class kuisioner_yn extends AppCompatActivity {
 
         rb1 = findViewById(R.id.rb_cek1);
         rb2 = findViewById(R.id.rb_cek2);
+    }
 
-
-
+    public void cek(View v) {
+        if (rb1.isChecked()) {
+            rb2.setChecked(false);
+            jawaban = "Benar";
+        }
+        if (rb2.isChecked()) {
+            rb1.setChecked(false);
+            jawaban = "Salah";
+        }
     }
 
     public void narikData(View view) {
+        Soal.listJawab.add(jawaban);
+        Soal.listCode.add(getIntent().getStringExtra("kode_soal"));
+
+        Log.d("Tag Kode Soal : " , getIntent().getStringExtra("kode_soal"));
+        Log.d("Tag Jawaban : " , jawaban);
+
         if ((Soal.listObj.size()) != (Soal.parameter)) {
             try {
                 JSONObject objData = Soal.listObj.get(Soal.parameter);
                 Soal.parameter++;
-
                 String getJenisJawbaan = objData.getString("jenis_pertanyaan");
-
                 if (getJenisJawbaan.equals("isian")) {
                     Intent intent = new Intent(kuisioner_yn.this, KuesionerTipeInActivity.class);
                     intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
@@ -104,15 +116,15 @@ public class kuisioner_yn extends AppCompatActivity {
                     .setMessage("Jika tidak ada koneksi silahkan pilih menu 'Draft'")
                     .setIcon(R.mipmap.ic_launcher)
                     .setCancelable(false)
-                    .setPositiveButton("Upload!",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                    .setPositiveButton("Upload!", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
                             Intent intent = new Intent(kuisioner_yn.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
                             Toast.makeText(kuisioner_yn.this, "Berhasil di Upload!", Toast.LENGTH_LONG).show();
                         }
                     })
-                    .setNegativeButton("Draft!",new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Draft!", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             Intent intent = new Intent(kuisioner_yn.this, DraftActivity.class);
                             startActivity(intent);

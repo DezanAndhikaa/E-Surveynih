@@ -96,26 +96,22 @@ public class FormPetaniActivity extends AppCompatActivity {
                     inKomoditas.setError("Masukkan Komoditas!");
                     Toast.makeText(getApplicationContext(), "\t\t\t Komoditas\n tidak boleh kosong", Toast.LENGTH_SHORT).show();
                 } else {
-                    JSONObject kelompoktani = new JSONObject();
                     try {
-                        kelompoktani.put("id_petani", inIDTani.getText().toString());
-                        kelompoktani.put("nama_petani", inNamaPetani.getText().toString());
-                        kelompoktani.put("alamat", inAlamat.getText().toString());
-                        kelompoktani.put("no_hp", inNoHP.getText().toString());
-                        kelompoktani.put("nama_desa", inDesa.getText().toString());
-                        kelompoktani.put("luas_lahan", inLuasLahan.getText().toString());
-                        kelompoktani.put("status_lahan", inStatusLahan.getText().toString());
-                        kelompoktani.put("kelompok_tani", inKlmpkTani.getText().toString());
-                        kelompoktani.put("komoditas", inKomoditas.getText().toString());
-
-                        sharedPreferenceCustom.putSharedPref(Constant.FORM_PETANI, kelompoktani.toString());
+                        Soal.jsonIdentitas.put("id_petani", inIDTani.getText().toString());
+                        Soal.jsonIdentitas.put("nama_petani", inNamaPetani.getText().toString());
+                        Soal.jsonIdentitas.put("alamat", inAlamat.getText().toString());
+                        Soal.jsonIdentitas.put("no_hp", inNoHP.getText().toString());
+                        Soal.jsonIdentitas.put("nama_desa", inDesa.getText().toString());
+                        Soal.jsonIdentitas.put("luas_lahan", inLuasLahan.getText().toString());
+                        Soal.jsonIdentitas.put("status_lahan", inStatusLahan.getText().toString());
+                        Soal.jsonIdentitas.put("kelompok_tani", inKlmpkTani.getText().toString());
+                        Soal.jsonIdentitas.put("komoditas", inKomoditas.getText().toString());
                     } catch (JSONException e) {
 
                         e.printStackTrace();
                     }
                     Soal.kategoriKuis = "Petani";
                     narikData2();
-                    sharedPreferenceCustom.putSharedPref(Constant.FORM_PETANI, inNamaPetani.getText().toString());
                 }
             }
         });
@@ -142,6 +138,7 @@ public class FormPetaniActivity extends AppCompatActivity {
                         Intent intent = new Intent(FormPetaniActivity.this, KuesionerTipeInActivity.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
                         intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("pilihan_ganda")) {
                         Intent intent = new Intent(FormPetaniActivity.this, kuisioner_pg.class);
@@ -150,8 +147,6 @@ public class FormPetaniActivity extends AppCompatActivity {
                         intent.putExtra("jawabC", objData.getString("pilihanC"));
                         intent.putExtra("jawabD", objData.getString("pilihanD"));
                         intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
-
-
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("yesno")) {
@@ -214,6 +209,7 @@ public class FormPetaniActivity extends AppCompatActivity {
                     if (getJenisJawbaan.equals("isian")) {
                         Intent intent = new Intent(FormPetaniActivity.this, KuesionerTipeInActivity.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("pilihan_ganda")) {
                         Intent intent = new Intent(FormPetaniActivity.this, kuisioner_pg.class);
@@ -221,13 +217,14 @@ public class FormPetaniActivity extends AppCompatActivity {
                         intent.putExtra("jawabB", objData.getString("pilihanB"));
                         intent.putExtra("jawabC", objData.getString("pilihanC"));
                         intent.putExtra("jawabD", objData.getString("pilihanD"));
-
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("yesno")) {
                         Intent intent = new Intent(FormPetaniActivity.this, kuisioner_yn.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
 
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("checkbox")) {
                         Intent intent = new Intent(FormPetaniActivity.this, kuisioner_cb.class);
@@ -237,7 +234,7 @@ public class FormPetaniActivity extends AppCompatActivity {
                         intent.putExtra("jawabC", objData.getString("pilihanCB3"));
                         intent.putExtra("jawabD", objData.getString("pilihanCB4"));
                         intent.putExtra("jawabE", objData.getString("pilihanCB5"));
-
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
                         startActivity(intent);
                     }
 

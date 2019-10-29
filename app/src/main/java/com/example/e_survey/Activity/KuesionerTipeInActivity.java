@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.e_survey.Model.SendJSON;
 import com.example.e_survey.R;
 
 import org.json.JSONArray;
@@ -40,13 +41,19 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
         textPertanyaan.setText(getIntent().getStringExtra("soal"));
         btnSubmit = findViewById(R.id.btnSubmit);
         jawaban = findViewById(R.id.inJawaban);
-//        Soal.listCode.add(getIntent().getStringExtra("code_kuisioner"));
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((Soal.listObj.size()) != (Soal.parameter)) {
+//                if ((Soal.listObj.size()) != (Soal.parameter)) {
+
+                if(Soal.parameter < 3){
+                    Soal.listJawab.add(jawaban.getText());
+                    Soal.listCode.add(getIntent().getStringExtra("kode_soal"));
+
+                    Log.d("Tag Kode Soal : " , getIntent().getStringExtra("kode_soal"));
+                    Log.d("Tag Jawaban : " , jawaban.getText().toString());
 
                     narikData();
 
@@ -62,8 +69,11 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                             .setPositiveButton("Upload!",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
                                     Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
-                                    startActivity(intent);
-                                    finish();
+//                                    startActivity(intent);
+//                                    finish();
+                                    SendJSON send = new SendJSON(getApplicationContext());
+                                    Log.d("TAG Cok : ", send.fetchJawaban());
+                                    Log.d("Tag Identaitas : " ,Soal.jsonIdentitas.toString());
                                     Toast.makeText(KuesionerTipeInActivity.this, "Berhasil di Upload!", Toast.LENGTH_LONG).show();
                                 }
                             })
@@ -85,8 +95,6 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
     }
 
     public void narikData() {
-        Soal.listJawab.add(jawaban.getText());
-
         RequestQueue req = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, KUESRB_URL, null, new Response.Listener<JSONObject>() {
             @Override
