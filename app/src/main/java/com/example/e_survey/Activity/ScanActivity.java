@@ -73,10 +73,8 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
 
     @Override
     public void handleResult(Result result) {
-//        sharedPreferenceCustom.getSharedPref(Constant.QR);
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
         String hasil = result.getText();
-        String qr = sharedPreferenceCustom.getSharedPref(Constant.QR);
         String dataOper = getIntent().getExtras().getString("nama");
         String[] splitOper = dataOper.split("\\.");
 
@@ -93,13 +91,10 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
         ScannerView.resumeCameraPreview(this);
 
         if (qrCode.equals(hasil)) {
-//            Intent intent = new Intent(ScanActivity.this, FormKiosActivity.class);
-//            startActivity(intent);
-            narikData2();
-
+            Intent login = new Intent(ScanActivity.this, FormKiosActivity.class);
+            startActivity(login);
         } else {
-//            Toast.makeText(getApplicationContext(),"Hasil JSON: " + QR.hasilQR + " || Hasil QR : "+ hasil, Toast.LENGTH_SHORT).show();
-            Toast.makeText(getApplicationContext(), qrCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "QR Code Tidak Sesuai Dengan Kios yang Dipilih!", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -119,20 +114,21 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
                     for (int a = 0; a < data.length(); a++) {
                         JSONObject oData = data.getJSONObject(a);
                         String kategori = oData.getString("nama_kategori_kuisioner");
+                        Soal.kategoriKuis = "Kios";
 
                         if (kategori.equals("Kios")) {
                             Soal.listObj.add(oData);
-                            Soal.listCode.add(oData.getString("code_kuisioner"));
                         }
                     }
 
                     JSONObject objData = Soal.listObj.get(0);
-
                     String getJenisJawbaan = objData.getString("jenis_pertanyaan");
 
                     if (getJenisJawbaan.equals("isian")) {
                         Intent intent = new Intent(ScanActivity.this, KuesionerTipeInActivity.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("pilihan_ganda")) {
                         Intent intent = new Intent(ScanActivity.this, kuisioner_pg.class);
@@ -140,12 +136,14 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
                         intent.putExtra("jawabB", objData.getString("pilihanB"));
                         intent.putExtra("jawabC", objData.getString("pilihanC"));
                         intent.putExtra("jawabD", objData.getString("pilihanD"));
-
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("yesno")) {
                         Intent intent = new Intent(ScanActivity.this, kuisioner_yn.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("checkbox")) {
@@ -156,6 +154,7 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
                         intent.putExtra("jawabC", objData.getString("pilihanCB3"));
                         intent.putExtra("jawabD", objData.getString("pilihanCB4"));
                         intent.putExtra("jawabE", objData.getString("pilihanCB5"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                         startActivity(intent);
                     }

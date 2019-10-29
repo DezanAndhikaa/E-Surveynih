@@ -8,17 +8,14 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.e_survey.R;
 
@@ -26,125 +23,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static com.example.e_survey.Util.Constant.KUESRB_URL;
 
 public class FormKiosActivity extends AppCompatActivity {
 
-    private EditText inNamaKios, inPemilik, inAlamat, inHP, inNamaDesa, inStatus, inAverage;
+    private EditText inNamaKios, inPemilik, inAlamat, inHP, inNamaDesa, inStatus, inAverage, inJumlahKeltan;
     private Button btnSubmit;
     private TextView tv_toolbar;
-    private String URL_KIOS = "";
-    String role = "";
     RadioGroup rdGroup;
-    RadioButton rdButton;
-    private RadioButton rbkios1, rbkios2, rbkios3;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_kios);
         initFindView();
-//        Loader load = new Loader();
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Kios();
-            }
-        });
 
-        rbkios1 = findViewById(R.id.rbkios1);
-        rbkios2 = findViewById(R.id.rbkios2);
-        rbkios2 = findViewById(R.id.rbkios3);
-
-    }
-
-
-    public void kiosA(View v) {
-        rbkios1.setChecked(true);
-        rbkios2.setChecked(false);
-        rbkios3.setChecked(false);
-    }
-
-    public void kiosB(View v) {
-        rbkios1.setChecked(false);
-        rbkios2.setChecked(true);
-        rbkios3.setChecked(false);
-    }
-
-    public void kiosC(View v) {
-        rbkios1.setChecked(false);
-        rbkios2.setChecked(false);
-        rbkios3.setChecked(true);
-    }
-
-
-    private void Kios() {
-        final String namaKios = this.inNamaKios.getText().toString().trim();
-        final String namaPengelola = this.inPemilik.getText().toString().trim();
-        final String alamatKios = this.inAlamat.getText().toString().trim();
-        final String noHP = this.inHP.getText().toString().trim();
-        final String namaDesa= this.inNamaDesa.getText().toString().trim();
-        final String statusBadanHukum = this.inStatus.getText().toString().trim();
-        final String average = this.inAverage.getText().toString().trim();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_KIOS,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
-                            int selectedID = rdGroup.getCheckedRadioButtonId();
-                            rdButton = findViewById(selectedID);
-
-                            if (selectedID == 1) {
-
-                            } else if (selectedID == 2){
-
-                            } else if (selectedID == 3) {
-
-                            }
-
-                            if (success.equals("1")) {
-//                                Intent kues_kios = new Intent(FormKiosActivity.this, KuesionerTipeCbActivity.class );
-//                                startActivity(kues_kios);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(FormKiosActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(FormKiosActivity.this,"Error" +error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("nama_kios", namaKios);
-                params.put("pemilik_kios", namaPengelola);
-                params.put("alamat_kios", alamatKios);
-                params.put("telp_kios", noHP);
-                params.put("nama_desa", namaDesa);
-                params.put("jumlah_kel_tani", role);
-                params.put("status_badan_hukum", statusBadanHukum);
-                params.put("rata_rata_penyaluran", average);
-
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
     }
 
     private void initFindView() {
@@ -156,9 +49,29 @@ public class FormKiosActivity extends AppCompatActivity {
         inStatus = findViewById(R.id.inStatusBadanHukum);
         inAverage = findViewById(R.id.inAvgPenyaluran);
         tv_toolbar = findViewById(R.id.tv_toolbar);
-        btnSubmit = findViewById(R.id.btnSubmit);
+        btnSubmit = findViewById(R.id.btnNext);
         rdGroup = findViewById(R.id.rdGroup);
-        tv_toolbar.setText("Profil Kios");
+        inJumlahKeltan = findViewById(R.id.jumlahKeltan);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    Soal.jsonIdentitas.put("nama_kios",inNamaKios.getText().toString());
+                    Soal.jsonIdentitas.put("pemilik_kios",inPemilik.getText().toString());
+                    Soal.jsonIdentitas.put("no_hp",inHP.getText().toString());
+                    Soal.jsonIdentitas.put("nama_desa", inNamaDesa.getText().toString());
+                    Soal.jsonIdentitas.put("status_badan_hukum", inStatus.getText().toString());
+                    Soal.jsonIdentitas.put("avg_penyaluran",inAverage.getText().toString());
+                    Soal.jsonIdentitas.put("alamat_kios",inAlamat.getText().toString());
+                    Soal.jsonIdentitas.put("jumlah_kelompok_tani", inJumlahKeltan.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                narikData2();
+            }
+        });
+
     }
 
     void narikData2() {
@@ -173,10 +86,9 @@ public class FormKiosActivity extends AppCompatActivity {
                     for (int a = 0; a < data.length(); a++) {
                         JSONObject oData = data.getJSONObject(a);
                         String kategori = oData.getString("nama_kategori_kuisioner");
-
+                        Soal.kategoriKuis = "Kios";
                         if (kategori.equals("Kios")) {
                             Soal.listObj.add(oData);
-                            Soal.listCode.add(oData.getString("code_kuisioner"));
                         }
                     }
 
@@ -187,6 +99,7 @@ public class FormKiosActivity extends AppCompatActivity {
                     if (getJenisJawbaan.equals("isian")) {
                         Intent intent = new Intent(FormKiosActivity.this, KuesionerTipeInActivity.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("pilihan_ganda")) {
                         Intent intent = new Intent(FormKiosActivity.this, kuisioner_pg.class);
@@ -194,13 +107,13 @@ public class FormKiosActivity extends AppCompatActivity {
                         intent.putExtra("jawabB", objData.getString("pilihanB"));
                         intent.putExtra("jawabC", objData.getString("pilihanC"));
                         intent.putExtra("jawabD", objData.getString("pilihanD"));
-
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("yesno")) {
                         Intent intent = new Intent(FormKiosActivity.this, kuisioner_yn.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("checkbox")) {
                         Intent intent = new Intent(FormKiosActivity.this, kuisioner_cb.class);
@@ -210,7 +123,7 @@ public class FormKiosActivity extends AppCompatActivity {
                         intent.putExtra("jawabC", objData.getString("pilihanCB3"));
                         intent.putExtra("jawabD", objData.getString("pilihanCB4"));
                         intent.putExtra("jawabE", objData.getString("pilihanCB5"));
-
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
                         startActivity(intent);
                     }
 

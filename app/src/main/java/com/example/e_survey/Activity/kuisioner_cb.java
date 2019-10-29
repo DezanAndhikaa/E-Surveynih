@@ -75,7 +75,7 @@ public class kuisioner_cb extends AppCompatActivity {
         }
 
         if (cb5.isChecked()) {
-            jawaban +=  "D,";
+            jawaban +=  "E,";
 
         }
 

@@ -59,7 +59,6 @@ public class FormPenyuluhActivity extends AppCompatActivity {
         inKlmpkTani = findViewById(R.id.inKlmpkTani);
         tv_toolbar = findViewById(R.id.tv_toolbar);
         btnNext = findViewById(R.id.btnNext);
-
         tv_toolbar.setText("Profil Penyuluh");
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,25 +73,21 @@ public class FormPenyuluhActivity extends AppCompatActivity {
                     inNoHP.setError("Masukkan Nomor HP!");
                     Toast.makeText(getApplicationContext(), "\t\t\t\tNomor HP\n tidak boleh kososng", Toast.LENGTH_SHORT).show();
                 } else {
-                    JSONObject penyuluh = new JSONObject();
                     try {
                         int selectedID = rdGroup.getCheckedRadioButtonId();
                         rdButton = findViewById(selectedID);
-                        //Querynya musti diganti
-                        penyuluh.put("nama_penyuluh", inNamaPenyuluh.getText().toString());
-                        penyuluh.put("alamat_penyuluh", inAlamat.getText().toString());
-                        penyuluh.put("telp_penyuluh", inNoHP.getText().toString());
-                        if (selectedID == 1) {
-                            penyuluh.put("jumlah_desa", inJumlahDesa.getText().toString());
-                        } else if (selectedID == 2) {
-                            penyuluh.put("jlh_klmpk_tani", inKlmpkTani.getText().toString());
-                        }
 
-                        sharedPreferenceCustom.putSharedPref(Constant.FORM_PENYULUH, penyuluh.toString());
+                        Soal.jsonIdentitas.put("nama_penyuluh", inNamaPenyuluh.getText().toString());
+                        Soal.jsonIdentitas.put("alamat_penyuluh", inAlamat.getText().toString());
+                        Soal.jsonIdentitas.put("telp_penyuluh", inNoHP.getText().toString());
+                        if (selectedID == 1) {
+                            Soal.jsonIdentitas.put("jumlah_desa", inJumlahDesa.getText().toString());
+                        } else if (selectedID == 2) {
+                            Soal.jsonIdentitas.put("kelompok_tani", inKlmpkTani.getText().toString());
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    sharedPreferenceCustom.putSharedPref(Constant.FORM_PENYULUH, inNamaPenyuluh.getText().toString());
                     narikData2();
                 }
             }
@@ -102,10 +97,16 @@ public class FormPenyuluhActivity extends AppCompatActivity {
     public void rdDesaVoid (View v){
         rdDesa.setChecked(true);
         rdTani.setChecked(false);
+        inJumlahDesa.setEnabled(true);
+        inKlmpkTani.setText("");
+        inKlmpkTani.setEnabled(false);
     }
     public void rdTaniVoid (View v){
         rdDesa.setChecked(false);
         rdTani.setChecked(true);
+        inKlmpkTani.setEnabled(true);
+        inJumlahDesa.setText("");
+        inJumlahDesa.setEnabled(false);
     }
 
     public void hideKeyboardFrom() {
@@ -125,20 +126,21 @@ public class FormPenyuluhActivity extends AppCompatActivity {
                     for (int a = 0; a < data.length(); a++) {
                         JSONObject oData = data.getJSONObject(a);
                         String kategori = oData.getString("nama_kategori_kuisioner");
+                        Soal.kategoriKuis = "Penyuluh";
 
                         if (kategori.equals("Penyuluh")) {
                             Soal.listObj.add(oData);
-                            Soal.listCode.add(oData.getString("code_kuisioner"));
                         }
                     }
 
                     JSONObject objData = Soal.listObj.get(0);
-
                     String getJenisJawbaan = objData.getString("jenis_pertanyaan");
 
                     if (getJenisJawbaan.equals("isian")) {
                         Intent intent = new Intent(FormPenyuluhActivity.this, KuesionerTipeInActivity.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("pilihan_ganda")) {
                         Intent intent = new Intent(FormPenyuluhActivity.this, kuisioner_pg.class);
@@ -146,12 +148,14 @@ public class FormPenyuluhActivity extends AppCompatActivity {
                         intent.putExtra("jawabB", objData.getString("pilihanB"));
                         intent.putExtra("jawabC", objData.getString("pilihanC"));
                         intent.putExtra("jawabD", objData.getString("pilihanD"));
-
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("yesno")) {
                         Intent intent = new Intent(FormPenyuluhActivity.this, kuisioner_yn.class);
                         intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                         startActivity(intent);
                     } else if (getJenisJawbaan.equals("checkbox")) {
@@ -162,6 +166,7 @@ public class FormPenyuluhActivity extends AppCompatActivity {
                         intent.putExtra("jawabC", objData.getString("pilihanCB3"));
                         intent.putExtra("jawabD", objData.getString("pilihanCB4"));
                         intent.putExtra("jawabE", objData.getString("pilihanCB5"));
+                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
                         startActivity(intent);
                     }

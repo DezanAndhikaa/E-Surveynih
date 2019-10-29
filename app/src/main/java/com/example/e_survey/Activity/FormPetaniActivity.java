@@ -107,7 +107,6 @@ public class FormPetaniActivity extends AppCompatActivity {
                         Soal.jsonIdentitas.put("kelompok_tani", inKlmpkTani.getText().toString());
                         Soal.jsonIdentitas.put("komoditas", inKomoditas.getText().toString());
                     } catch (JSONException e) {
-
                         e.printStackTrace();
                     }
                     Soal.kategoriKuis = "Petani";
@@ -120,66 +119,6 @@ public class FormPetaniActivity extends AppCompatActivity {
 
     public void hideKeyboardFrom() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-
-    void narikData() {
-        RequestQueue req = Volley.newRequestQueue(getApplicationContext());
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, KUESRB_URL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray data = response.getJSONArray("data");
-                    JSONObject objData = data.getJSONObject(0);
-                    Soal.parameter++;
-
-                    String getJenisJawbaan = objData.getString("jenis_pertanyaan");
-
-                    if (getJenisJawbaan.equals("isian")) {
-                        Intent intent = new Intent(FormPetaniActivity.this, KuesionerTipeInActivity.class);
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
-
-                        startActivity(intent);
-                    } else if (getJenisJawbaan.equals("pilihan_ganda")) {
-                        Intent intent = new Intent(FormPetaniActivity.this, kuisioner_pg.class);
-                        intent.putExtra("jawabA", objData.getString("pilihanA"));
-                        intent.putExtra("jawabB", objData.getString("pilihanB"));
-                        intent.putExtra("jawabC", objData.getString("pilihanC"));
-                        intent.putExtra("jawabD", objData.getString("pilihanD"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-                        startActivity(intent);
-                    } else if (getJenisJawbaan.equals("yesno")) {
-                        Intent intent = new Intent(FormPetaniActivity.this, KuesionerTipeYnActivity.class);
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
-
-                        startActivity(intent);
-                    } else if (getJenisJawbaan.equals("checkbox")) {
-                        Intent intent = new Intent(FormPetaniActivity.this, KuesionerTipeYnActivity.class);
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-                        intent.putExtra("jawabA", objData.getString("pilihanCB1"));
-                        intent.putExtra("jawabB", objData.getString("pilihanCB2"));
-                        intent.putExtra("jawabC", objData.getString("pilihanCB3"));
-                        intent.putExtra("jawabD", objData.getString("pilihanCB4"));
-                        intent.putExtra("jawabE", objData.getString("pilihanCB5"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
-
-                        startActivity(intent);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        req.add(request);
     }
 
     void narikData2() {
@@ -198,7 +137,6 @@ public class FormPetaniActivity extends AppCompatActivity {
 
                         if (kategori.equals("Petani")) {
                             Soal.listObj.add(oData);
-                            Soal.listCode.add(oData.getString("code_kuisioner"));
                         }
                     }
 

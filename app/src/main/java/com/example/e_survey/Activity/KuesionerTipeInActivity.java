@@ -46,49 +46,16 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if ((Soal.listObj.size()) != (Soal.parameter)) {
+                Soal.listJawab.add(jawaban.getText());
+                Soal.listCode.add(getIntent().getStringExtra("kode_soal"));
 
-                if(Soal.parameter < 3){
-                    Soal.listJawab.add(jawaban.getText());
-                    Soal.listCode.add(getIntent().getStringExtra("kode_soal"));
-
-                    Log.d("Tag Kode Soal : " , getIntent().getStringExtra("kode_soal"));
-                    Log.d("Tag Jawaban : " , jawaban.getText().toString());
-
+                //                if ((Soal.listObj.size()) != (Soal.parameter)) {
+                if (Soal.parameter < 3) {
+                    Log.d("Tag Kode Soal : ", getIntent().getStringExtra("kode_soal"));
+                    Log.d("Tag Jawaban : ", jawaban.getText().toString());
                     narikData();
-
                 } else {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
-
-                    alertDialogBuilder.setTitle("Upload Hasil Kuisioner?");
-
-                    alertDialogBuilder
-                            .setMessage("Jika tidak ada koneksi silahkan pilih menu 'Draft'")
-                            .setIcon(R.mipmap.ic_launcher)
-                            .setCancelable(false)
-                            .setPositiveButton("Upload!",new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
-                                    Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
-//                                    startActivity(intent);
-//                                    finish();
-                                    SendJSON send = new SendJSON(getApplicationContext());
-                                    Log.d("TAG Cok : ", send.fetchJawaban());
-                                    Log.d("Tag Identaitas : " ,Soal.jsonIdentitas.toString());
-                                    Toast.makeText(KuesionerTipeInActivity.this, "Berhasil di Upload!", Toast.LENGTH_LONG).show();
-                                }
-                            })
-                            .setNegativeButton("Draft!",new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    Intent intent = new Intent(KuesionerTipeInActivity.this, DraftActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                    Toast.makeText(KuesionerTipeInActivity.this, "Berhasil di Menjadikan Draft!", Toast.LENGTH_LONG).show();
-
-                                }
-                            });
-
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
+                    open();
                 }
             }
         });
@@ -156,5 +123,46 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
         req.add(request);
     }
 
+    public void open() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Upload Hasil Kuisioner?");
+        alertDialogBuilder.setMessage("Jika tidak ada koneksi silahkan pilih menu 'Draft'");
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher);
+        alertDialogBuilder.setPositiveButton("Upload",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        SendJSON send = new SendJSON(getApplicationContext());
+                        Log.d("Identitas : ", Soal.jsonIdentitas.toString());
+                        Log.d("Jawaban : ", send.fetchJawaban());
+                        if(Soal.kategoriKuis.equals("Petani")){
+                            send.PostJSONPetani();
+                        }else if(Soal.kategoriKuis.equals("Kelompok Tani")){
+                            send.PostJSONKeltan();
+                        }else if(Soal.kategoriKuis.equals("Penyuluh")){
+                            send.PostJSONPenyuluh();
+                        }else if(Soal.kategoriKuis.equals("Kios")){
+                            send.PostJSONKios();
+                        }
+
+                        Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(KuesionerTipeInActivity.this, "Berhasil Mengupload Hasil Kuesioner!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("Draft", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+                Toast.makeText(KuesionerTipeInActivity.this, "Berhasil Mendraft Hasil Kuesioner!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 
 }
