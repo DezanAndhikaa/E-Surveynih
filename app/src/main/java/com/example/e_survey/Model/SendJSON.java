@@ -11,20 +11,31 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.e_survey.Activity.Soal;
+import com.example.e_survey.DatabaseLokal.DataHelper;
+import com.example.e_survey.DatabaseLokal.HasilJawabanKeltan;
+import com.example.e_survey.DatabaseLokal.History;
 
+import org.json.JSONException;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class SendJSON {
 
+    Date currentTime = Calendar.getInstance().getTime();
+
+    private DataHelper dataHelper;
     private Context context;
 
-    public SendJSON(Context con){
+    public SendJSON(Context con) {
         context = con;
     }
 
-    public String fetchJawaban(){
-        String quizCode ="[";
+    public String fetchJawaban() {
+        String quizCode = "[";
 
         for (int x = 0; x < Soal.listCode.size(); x++) {
             if (x != (Soal.listCode.size() - 1)) {
@@ -37,7 +48,7 @@ public class SendJSON {
         return quizCode;
     }
 
-    public void PostJSONPetani(){
+    public void PostJSONPetani() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://survey-kartutani.com/api/tambah_hasilpetani",
                 new Response.Listener<String>() {
                     @Override
@@ -52,7 +63,7 @@ public class SendJSON {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("TAG E: ",error.getMessage());
+                        Log.e("TAG E: ", error.getMessage());
                     }
 
                 }) {
@@ -71,12 +82,13 @@ public class SendJSON {
             }
         };
 
+
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
-        Soal.parameter=0;
+        Soal.parameter = 0;
     }
 
-    public void PostJSONKios(){
+    public void PostJSONKios() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://survey-kartutani.com/api/tambah_hasilkios",
                 new Response.Listener<String>() {
                     @Override
@@ -91,7 +103,7 @@ public class SendJSON {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("TAG E: ",error.getMessage());
+                        Log.e("TAG E: ", error.getMessage());
                     }
 
                 }) {
@@ -112,10 +124,10 @@ public class SendJSON {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
-        Soal.parameter=0;
+        Soal.parameter = 0;
     }
 
-    public void PostJSONKeltan(){
+    public void PostJSONKeltan() throws JSONException {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://survey-kartutani.com/api/tambah_hasilkeltan",
                 new Response.Listener<String>() {
                     @Override
@@ -130,7 +142,7 @@ public class SendJSON {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("TAG E: ",error.getMessage());
+                        Log.e("TAG E: ", error.getMessage());
                     }
 
                 }) {
@@ -149,12 +161,23 @@ public class SendJSON {
             }
         };
 
+        Log.d("tag: ", currentTime.toString());
+        History history = new History();
+        history.setTanggal(currentTime.toString());
+        history.setJam(12);
+        history.setKategori(Soal.kategoriKuis);
+        history.setNama(Soal.jsonIdentitas.getString("nama_klmpk_tani"));
+        try {
+            dataHelper.addRecord(history);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
-        Soal.parameter=0;
+        Soal.parameter = 0;
     }
 
-    public void PostJSONPenyuluh(){
+    public void PostJSONPenyuluh() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://survey-kartutani.com/api/tambah_hasilpenyuluh",
                 new Response.Listener<String>() {
                     @Override
@@ -169,7 +192,7 @@ public class SendJSON {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("TAG E: ",error.getMessage());
+                        Log.e("TAG E: ", error.getMessage());
                     }
 
                 }) {
@@ -190,7 +213,7 @@ public class SendJSON {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
-        Soal.parameter=0;
+        Soal.parameter = 0;
     }
 
 }

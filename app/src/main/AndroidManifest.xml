@@ -19,7 +19,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.Home2"></activity>
+        <activity android:name=".Historia"></activity>
+        <activity android:name=".Activity.Home2" />
         <activity android:name=".Activity.kuisioner_cb" />
         <activity android:name=".Activity.kuisioner_yn" />
         <activity android:name=".KuisPG" />

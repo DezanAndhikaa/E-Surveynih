@@ -138,7 +138,11 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                         if(Soal.kategoriKuis.equals("Petani")){
                             send.PostJSONPetani();
                         }else if(Soal.kategoriKuis.equals("Kelompok Tani")){
-                            send.PostJSONKeltan();
+                            try {
+                                send.PostJSONKeltan();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }else if(Soal.kategoriKuis.equals("Penyuluh")){
                             send.PostJSONPenyuluh();
                         }else if(Soal.kategoriKuis.equals("Kios")){
