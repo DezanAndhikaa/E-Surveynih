@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.e_survey.DatabaseLokal.DataHelper;
 import com.example.e_survey.Model.SendJSON;
 import com.example.e_survey.R;
 
@@ -32,6 +33,7 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
 
     private Button btnSubmit;
     private EditText jawaban;
+    DataHelper dbs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
         btnSubmit = findViewById(R.id.btnSubmit);
         jawaban = findViewById(R.id.inJawaban);
 
+        dbs = new DataHelper(getApplicationContext());
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,65 +65,54 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
     }
 
     public void narikData() {
-        RequestQueue req = Volley.newRequestQueue(getApplicationContext());
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, KUESRB_URL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray data = response.getJSONArray("data");
-                    JSONObject objData = Soal.listObj.get(Soal.parameter);
+        try {
+            JSONArray data = new JSONArray(dbs.cekKuesioner());
+            JSONObject objData = Soal.listObj.get(Soal.parameter);
 
-                    Soal.parameter++;
+            Soal.parameter++;
 
-                    String getJenisJawbaan = objData.getString("jenis_pertanyaan");
+            String getJenisJawbaan = objData.getString("jenis_pertanyaan");
 
-                    if (getJenisJawbaan.equals("isian")) {
-                        Intent intent = new Intent(KuesionerTipeInActivity.this, KuesionerTipeInActivity.class);
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+            if (getJenisJawbaan.equals("isian")) {
+                Intent intent = new Intent(KuesionerTipeInActivity.this, KuesionerTipeInActivity.class);
+                intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
-                        startActivity(intent);
-                    } else if (getJenisJawbaan.equals("pilihan_ganda")) {
-                        Intent intent = new Intent(KuesionerTipeInActivity.this, kuisioner_pg.class);
-                        intent.putExtra("jawabA", objData.getString("pilihanA"));
-                        intent.putExtra("jawabB", objData.getString("pilihanB"));
-                        intent.putExtra("jawabC", objData.getString("pilihanC"));
-                        intent.putExtra("jawabD", objData.getString("pilihanD"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+                startActivity(intent);
+            } else if (getJenisJawbaan.equals("pilihan_ganda")) {
+                Intent intent = new Intent(KuesionerTipeInActivity.this, kuisioner_pg.class);
+                intent.putExtra("jawabA", objData.getString("pilihanA"));
+                intent.putExtra("jawabB", objData.getString("pilihanB"));
+                intent.putExtra("jawabC", objData.getString("pilihanC"));
+                intent.putExtra("jawabD", objData.getString("pilihanD"));
+                intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
 
-                        startActivity(intent);
-                    } else if (getJenisJawbaan.equals("yesno")) {
-                        Intent intent = new Intent(KuesionerTipeInActivity.this, kuisioner_yn.class);
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+                startActivity(intent);
+            } else if (getJenisJawbaan.equals("yesno")) {
+                Intent intent = new Intent(KuesionerTipeInActivity.this, kuisioner_yn.class);
+                intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
-                        startActivity(intent);
-                    } else if (getJenisJawbaan.equals("checkbox")) {
-                        Intent intent = new Intent(KuesionerTipeInActivity.this, kuisioner_cb.class);
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-                        intent.putExtra("jawabA", objData.getString("pilihanCB1"));
-                        intent.putExtra("jawabB", objData.getString("pilihanCB2"));
-                        intent.putExtra("jawabC", objData.getString("pilihanCB3"));
-                        intent.putExtra("jawabD", objData.getString("pilihanCB4"));
-                        intent.putExtra("jawabE", objData.getString("pilihanCB5"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+                startActivity(intent);
+            } else if (getJenisJawbaan.equals("checkbox")) {
+                Intent intent = new Intent(KuesionerTipeInActivity.this, kuisioner_cb.class);
+                intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                intent.putExtra("jawabA", objData.getString("pilihanCB1"));
+                intent.putExtra("jawabB", objData.getString("pilihanCB2"));
+                intent.putExtra("jawabC", objData.getString("pilihanCB3"));
+                intent.putExtra("jawabD", objData.getString("pilihanCB4"));
+                intent.putExtra("jawabE", objData.getString("pilihanCB5"));
+                intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
 
-                        startActivity(intent);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                startActivity(intent);
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-            }
-        });
 
-        req.add(request);
     }
 
     public void open() {
@@ -158,10 +150,12 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
 
         alertDialogBuilder.setNegativeButton("Draft", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
-                Toast.makeText(KuesionerTipeInActivity.this, "Berhasil Mendraft Hasil Kuesioner!", Toast.LENGTH_SHORT).show();
+                DataHelper dbs = new DataHelper(getApplicationContext());
+
+//                Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
+//                startActivity(intent);
+//                finish();
+//                Toast.makeText(KuesionerTipeInActivity.this, "Berhasil Mendraft Hasil Kuesioner!", Toast.LENGTH_SHORT).show();
             }
         });
 

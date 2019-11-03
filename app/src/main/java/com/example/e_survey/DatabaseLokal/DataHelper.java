@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
+import com.example.e_survey.Model.Cache.DataKios;
+import com.example.e_survey.Model.Cache.Draft;
+import com.example.e_survey.Model.Cache.Kuesioner;
+import com.example.e_survey.Model.Cache.Log;
 import com.example.e_survey.Model.Cache.Login;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class DataHelper extends SQLiteOpenHelper {
     private static final String TABLE_DRAFT = "tableDraft";
     private static final String KEY_JsonResponden = "jsonResponden";
     private static final String KEY_JsonJawaban = "jsonJawaban";
+    private static final String KEY_Kategori = "kategori";
 
     //Table Kios
     private static final String TABLE_KIOS = "tableKios";
@@ -49,8 +52,8 @@ public class DataHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_LOGIN = "CREATE TABLE " + TABLE_LOGIN + "(" + KEY_USERNAME + " TEXT," + KEY_PASSWORD + " TEXT" + ")";
         String CREATE_TABLE_KUESIONER = "CREATE TABLE "+ TABLE_KUESIONER+ "("+KEY_KUESIONER+" TEXT)";
-        String CREATE_TABLE_LOG = "CREATE TABLE "+TABLE_LOG +" ("+KEY_NamaAksi+" TEXT, "+KEY_NamaDesa+ " TEXT,"+KEY_TanggalAksi+" TEXT,"+KEY_USERNAME+" TEXT)";
-        String CREATE_TABLE_DRAFT = "CREATE TABLE " + TABLE_DRAFT + "("+KEY_JsonResponden+" TEXT,"+KEY_JsonJawaban+" TEXT)";
+        String CREATE_TABLE_LOG = "CREATE TABLE "+TABLE_LOG +" ("+KEY_NamaAksi+" TEXT, "+KEY_NamaDesa+ " TEXT,"+KEY_TanggalAksi+" TEXT,"+KEY_JamAksi+" TEXT)";
+        String CREATE_TABLE_DRAFT = "CREATE TABLE " + TABLE_DRAFT + "("+KEY_JsonResponden+" TEXT,"+KEY_JsonJawaban+" TEXT,"+KEY_Kategori+" TEXT)";
         String CREATE_TABLE_KIOS = "CREATE TABLE "+ TABLE_KIOS + "("+KEY_KIOS+" TEXT)";
 
         db.execSQL(CREATE_TABLE_LOGIN);
@@ -134,5 +137,218 @@ public class DataHelper extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         db.delete(TABLE_LOGIN, null, null);
         db.close();
+    }
+
+
+    //Chekcing Kios
+    public void saveKios(DataKios data) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_KIOS, data.getListKiosOff());
+
+        db.insert(TABLE_KIOS, null, values);
+        db.close();
+    }
+
+    public String cekKios() {
+        String hasil = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_KIOS, new String[]{"*"},
+                null,
+                null, null, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                hasil = cursor.getString(0);
+            } else {
+                hasil = "none";
+            }
+            cursor.close();
+        }else{
+            hasil = "none";
+        }
+
+        db.close();
+        return hasil;
+    }
+
+    public List<DataKios> findAllKios() {
+        List<DataKios> datakios = new ArrayList<DataKios>();
+        String query = "SELECT * FROM " + TABLE_KIOS;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                DataKios buku = new DataKios();
+                buku.setListKiosOff((cursor.getString(0)));
+                datakios.add(buku);
+            } while (cursor.moveToNext());
+        }
+
+        return datakios;
+    }
+
+
+
+    //Chekcing Kuesioner
+    public void saveKuesioner(Kuesioner data) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_KUESIONER, data.getDataKuesioner());
+
+        db.insert(TABLE_KUESIONER, null, values);
+        db.close();
+    }
+
+    public String cekKuesioner() {
+        String hasil = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_KUESIONER, new String[]{"*"},
+                null,
+                null, null, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                hasil = cursor.getString(0);
+            } else {
+                hasil = "none";
+            }
+            cursor.close();
+        }else{
+            hasil = "none";
+        }
+
+        db.close();
+        return hasil;
+    }
+
+    public List<Kuesioner> findAllKuesioner() {
+        List<Kuesioner> datakios = new ArrayList<Kuesioner>();
+        String query = "SELECT * FROM " + TABLE_KUESIONER;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Kuesioner buku = new Kuesioner();
+                buku.setDataKuesioner((cursor.getString(0)));
+                datakios.add(buku);
+            } while (cursor.moveToNext());
+        }
+
+        return datakios;
+    }
+
+    //Chekcing Draft
+    public void saveDraft(Draft data) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_JsonJawaban, data.getJsonJawaban());
+        values.put(KEY_JsonResponden, data.getJsonResponden());
+        values.put(KEY_Kategori, data.getKategori());
+
+        db.insert(TABLE_DRAFT, null, values);
+        db.close();
+    }
+
+    public String cekDraft() {
+        String hasil = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_DRAFT, new String[]{"*"},
+                null,
+                null, null, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                hasil = cursor.getString(0);
+            } else {
+                hasil = "none";
+            }
+            cursor.close();
+        }else{
+            hasil = "none";
+        }
+
+        db.close();
+        return hasil;
+    }
+
+    public List<Draft> findAllDraft() {
+        List<Draft> datakios = new ArrayList<Draft>();
+        String query = "SELECT * FROM " + TABLE_DRAFT;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Draft buku = new Draft();
+                buku.setJsonResponden((cursor.getString(0)));
+                buku.setJsonJawaban((cursor.getString(1)));
+                buku.setKategori((cursor.getString(2)));
+                datakios.add(buku);
+            } while (cursor.moveToNext());
+        }
+
+        return datakios;
+    }
+
+    //Chekcing Log
+    public void saveLog(Log data) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_NamaAksi, data.getKEY_NamaAksi());
+        values.put(KEY_NamaDesa, data.getKEY_NamaDesa());
+        values.put(KEY_TanggalAksi, data.getKEY_TanggalAksi());
+        values.put(KEY_JamAksi, data.getKEY_JamAksi());
+
+        db.insert(TABLE_LOG, null, values);
+        db.close();
+    }
+
+    public String cekLog() {
+        String hasil = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_LOG, new String[]{"*"},
+                null,
+                null, null, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                hasil = cursor.getString(0);
+            } else {
+                hasil = "none";
+            }
+            cursor.close();
+        }else{
+            hasil = "none";
+        }
+
+        db.close();
+        return hasil;
+    }
+
+    public List<Log> findAllLog() {
+        List<Log> datakios = new ArrayList<Log>();
+        String query = "SELECT * FROM " + TABLE_LOG;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Log buku = new Log();
+                buku.setKEY_NamaAksi((cursor.getString(0)));
+                buku.setKEY_NamaDesa((cursor.getString(1)));
+                buku.setKEY_TanggalAksi((cursor.getString(2)));
+                buku.setKEY_JamAksi((cursor.getString(3)));
+                datakios.add(buku);
+            } while (cursor.moveToNext());
+        }
+
+        return datakios;
     }
 }

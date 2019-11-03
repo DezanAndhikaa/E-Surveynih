@@ -44,12 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dbHelper = new DataHelper(this);
 
-        if(!dbHelper.cekLogin().equals("none")){
-            Soal.idManagement = dbHelper.cekLogin();
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
+
 
         setContentView(R.layout.activity_login);
         username = findViewById(R.id.username);
@@ -58,6 +53,14 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
 
+        if(!dbHelper.cekLogin().equals("none")){
+            Soal.idManagement = dbHelper.cekLogin();
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+
+            startActivity(intent);
+            finish();
+
+        }
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override

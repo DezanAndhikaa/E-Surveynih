@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.e_survey.DatabaseLokal.DataHelper;
 import com.example.e_survey.R;
 import com.example.e_survey.Util.Constant;
 import com.example.e_survey.Util.SharedPreferenceCustom;
@@ -39,15 +40,20 @@ public class FormPetaniActivity extends AppCompatActivity {
     Button btnNext;
     TextView tv_toolbar;
     SharedPreferenceCustom sharedPreferenceCustom;
+    DataHelper dbs;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_petani);
+         dbs = new DataHelper(getApplicationContext());
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
         initFindView();
         hideKeyboardFrom();
+        Log.d("Kios : ", dbs.cekKios());
+        Log.d("Kuesioner : ", dbs.cekKuesioner());
+
     }
 
     private void initFindView() {
@@ -123,70 +129,57 @@ public class FormPetaniActivity extends AppCompatActivity {
 
     void narikData2() {
         Soal.listObj.clear();
-        RequestQueue req = Volley.newRequestQueue(getApplicationContext());
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, KUESRB_URL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray data = response.getJSONArray("data");
-                    Soal.parameter++;
+        try {
+            JSONArray data = new JSONArray(dbs.cekKuesioner());
+            Soal.parameter++;
 
-                    for (int a = 0; a < data.length(); a++) {
-                        JSONObject oData = data.getJSONObject(a);
-                        String kategori = oData.getString("nama_kategori_kuisioner");
+            for (int a = 0; a < data.length(); a++) {
+                JSONObject oData = data.getJSONObject(a);
+                String kategori = oData.getString("nama_kategori_kuisioner");
 
-                        if (kategori.equals("Petani")) {
-                            Soal.listObj.add(oData);
-                        }
-                    }
-
-                    JSONObject objData = Soal.listObj.get(0);
-
-                    String getJenisJawbaan = objData.getString("jenis_pertanyaan");
-
-                    if (getJenisJawbaan.equals("isian")) {
-                        Intent intent = new Intent(FormPetaniActivity.this, KuesionerTipeInActivity.class);
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
-                        startActivity(intent);
-                    } else if (getJenisJawbaan.equals("pilihan_ganda")) {
-                        Intent intent = new Intent(FormPetaniActivity.this, kuisioner_pg.class);
-                        intent.putExtra("jawabA", objData.getString("pilihanA"));
-                        intent.putExtra("jawabB", objData.getString("pilihanB"));
-                        intent.putExtra("jawabC", objData.getString("pilihanC"));
-                        intent.putExtra("jawabD", objData.getString("pilihanD"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-                        startActivity(intent);
-                    } else if (getJenisJawbaan.equals("yesno")) {
-                        Intent intent = new Intent(FormPetaniActivity.this, kuisioner_yn.class);
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
-                        startActivity(intent);
-                    } else if (getJenisJawbaan.equals("checkbox")) {
-                        Intent intent = new Intent(FormPetaniActivity.this, kuisioner_cb.class);
-                        intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
-                        intent.putExtra("jawabA", objData.getString("pilihanCB1"));
-                        intent.putExtra("jawabB", objData.getString("pilihanCB2"));
-                        intent.putExtra("jawabC", objData.getString("pilihanCB3"));
-                        intent.putExtra("jawabD", objData.getString("pilihanCB4"));
-                        intent.putExtra("jawabE", objData.getString("pilihanCB5"));
-                        intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
-                        startActivity(intent);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (kategori.equals("Petani")) {
+                    Soal.listObj.add(oData);
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
+            JSONObject objData = Soal.listObj.get(0);
+
+            String getJenisJawbaan = objData.getString("jenis_pertanyaan");
+
+            if (getJenisJawbaan.equals("isian")) {
+                Intent intent = new Intent(FormPetaniActivity.this, KuesionerTipeInActivity.class);
+                intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+                startActivity(intent);
+            } else if (getJenisJawbaan.equals("pilihan_ganda")) {
+                Intent intent = new Intent(FormPetaniActivity.this, kuisioner_pg.class);
+                intent.putExtra("jawabA", objData.getString("pilihanA"));
+                intent.putExtra("jawabB", objData.getString("pilihanB"));
+                intent.putExtra("jawabC", objData.getString("pilihanC"));
+                intent.putExtra("jawabD", objData.getString("pilihanD"));
+                intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+                intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                startActivity(intent);
+            } else if (getJenisJawbaan.equals("yesno")) {
+                Intent intent = new Intent(FormPetaniActivity.this, kuisioner_yn.class);
+                intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+
+                intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+                startActivity(intent);
+            } else if (getJenisJawbaan.equals("checkbox")) {
+                Intent intent = new Intent(FormPetaniActivity.this, kuisioner_cb.class);
+                intent.putExtra("soal", objData.getString("pertanyaan_kuisioner"));
+                intent.putExtra("jawabA", objData.getString("pilihanCB1"));
+                intent.putExtra("jawabB", objData.getString("pilihanCB2"));
+                intent.putExtra("jawabC", objData.getString("pilihanCB3"));
+                intent.putExtra("jawabD", objData.getString("pilihanCB4"));
+                intent.putExtra("jawabE", objData.getString("pilihanCB5"));
+                intent.putExtra("kode_soal", objData.getString("code_kuisioner"));
+                startActivity(intent);
             }
-        });
 
-        req.add(request);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
