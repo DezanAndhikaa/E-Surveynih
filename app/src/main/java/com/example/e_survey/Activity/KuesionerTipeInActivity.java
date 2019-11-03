@@ -49,8 +49,8 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                 Soal.listJawab.add(jawaban.getText());
                 Soal.listCode.add(getIntent().getStringExtra("kode_soal"));
 
-                //                if ((Soal.listObj.size()) != (Soal.parameter)) {
-                if (Soal.parameter < 3) {
+                if ((Soal.listObj.size()) != (Soal.parameter)) {
+//                if (Soal.parameter < 3) {
                     Log.d("Tag Kode Soal : ", getIntent().getStringExtra("kode_soal"));
                     Log.d("Tag Jawaban : ", jawaban.getText().toString());
                     narikData();
@@ -135,17 +135,17 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                         SendJSON send = new SendJSON(getApplicationContext());
                         Log.d("Identitas : ", Soal.jsonIdentitas.toString());
                         Log.d("Jawaban : ", send.fetchJawaban());
-                        if(Soal.kategoriKuis.equals("Petani")){
+                        if (Soal.kategoriKuis.equals("Petani")) {
                             send.PostJSONPetani();
-                        }else if(Soal.kategoriKuis.equals("Kelompok Tani")){
+                        } else if (Soal.kategoriKuis.equals("Kelompok Tani")) {
                             try {
                                 send.PostJSONKeltan();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        }else if(Soal.kategoriKuis.equals("Penyuluh")){
+                        } else if (Soal.kategoriKuis.equals("Penyuluh")) {
                             send.PostJSONPenyuluh();
-                        }else if(Soal.kategoriKuis.equals("Kios")){
+                        } else if (Soal.kategoriKuis.equals("Kios")) {
                             send.PostJSONKios();
                         }
 

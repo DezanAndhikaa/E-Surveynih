@@ -168,7 +168,7 @@ public class SendJSON {
         history.setKategori(Soal.kategoriKuis);
         history.setNama(Soal.jsonIdentitas.getString("nama_klmpk_tani"));
         try {
-            dataHelper.addRecord(history);
+//            dataHelper.addRecord(history);
         } catch (Exception e) {
             e.printStackTrace();
         }

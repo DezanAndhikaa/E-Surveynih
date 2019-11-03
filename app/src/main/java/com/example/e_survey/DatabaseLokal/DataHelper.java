@@ -6,118 +6,133 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.e_survey.Model.Cache.Login;
+
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class DataHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "ekartutani";
 
-    private static final String DATABASE_NAME = "survey";
+    //Table Login
+    private static final String TABLE_LOGIN = "tableLogin";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_PASSWORD = "password";
 
-    private static final String TABLE_HISTORY = "history";
+    //Table Kuesioner
+    private static final String TABLE_KUESIONER = "tableKuesioner";
+    private static final String KEY_KUESIONER = "kuesioner";
 
-    private static final String KEY_TANGGAL = "tanggal";
-    private static final String KEY_JAM = "jam";
-    private static final String KEY_KATEGORI = "kategori";
-    private static final String KEY_NAMA = "nama";
-    private static final String KEY_DESA = "desa";
-    private History history;
+    //Table Log
+    private static final String TABLE_LOG = "tableLog";
+    private static final String KEY_NamaAksi = "namaAksi";
+    private static final String KEY_TanggalAksi = "tanggalAksi";
+    private static final String KEY_NamaDesa = "namaDesa";
+    private static final String KEY_JamAksi = "jamAksi";
 
-    public DataHelper(Context context){
-        super (context, DATABASE_NAME, null, DATABASE_VERSION);
+    //Table Draft
+    private static final String TABLE_DRAFT = "tableDraft";
+    private static final String KEY_JsonResponden = "jsonResponden";
+    private static final String KEY_JsonJawaban = "jsonJawaban";
+
+    //Table Kios
+    private static final String TABLE_KIOS = "tableKios";
+    private static final String KEY_KIOS = "listKios";
+
+    public DataHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_HISTORY_TABLE = "CREATE TABLE " + TABLE_HISTORY + "(" + KEY_TANGGAL + "STRING," + KEY_JAM + "INTEGER," + KEY_KATEGORI + "STRING," + KEY_NAMA + "STRING," +KEY_DESA + "STRING" + "NULL" + ")";
-        db.execSQL (CREATE_HISTORY_TABLE);
+        String CREATE_TABLE_LOGIN = "CREATE TABLE " + TABLE_LOGIN + "(" + KEY_USERNAME + " TEXT," + KEY_PASSWORD + " TEXT" + ")";
+        String CREATE_TABLE_KUESIONER = "CREATE TABLE "+ TABLE_KUESIONER+ "("+KEY_KUESIONER+" TEXT)";
+        String CREATE_TABLE_LOG = "CREATE TABLE "+TABLE_LOG +" ("+KEY_NamaAksi+" TEXT, "+KEY_NamaDesa+ " TEXT,"+KEY_TanggalAksi+" TEXT,"+KEY_USERNAME+" TEXT)";
+        String CREATE_TABLE_DRAFT = "CREATE TABLE " + TABLE_DRAFT + "("+KEY_JsonResponden+" TEXT,"+KEY_JsonJawaban+" TEXT)";
+        String CREATE_TABLE_KIOS = "CREATE TABLE "+ TABLE_KIOS + "("+KEY_KIOS+" TEXT)";
 
-
+        db.execSQL(CREATE_TABLE_LOGIN);
+        db.execSQL(CREATE_TABLE_KUESIONER);
+        db.execSQL(CREATE_TABLE_LOG);
+        db.execSQL(CREATE_TABLE_DRAFT);
+        db.execSQL(CREATE_TABLE_KIOS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN);
+
         onCreate(db);
     }
 
-    public void addRecord(History history) {
-        SQLiteDatabase db = getWritableDatabase();
-
+    public void save(Login login) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_TANGGAL, history.getTanggal());
-        values.put(KEY_JAM, history.getJam());
-        values.put(KEY_KATEGORI, history.getKategori());
-        values.put(KEY_NAMA, history.getNama());
-        values.put(KEY_DESA, history.getDesa());
+        values.put(KEY_USERNAME, login.getUsername());
+        values.put(KEY_PASSWORD, login.getPassword());
 
-
-        db.insert(TABLE_HISTORY, null, values);
+        db.insert(TABLE_LOGIN, null, values);
         db.close();
     }
 
-    // get All Record
-    public List<History> getAllRecord() {
-        List<History> historyList = new ArrayList<History>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_HISTORY;
+    public List<Login> findAll() {
+        List<Login> listLogin = new ArrayList<Login>();
+        String query = "SELECT * FROM " + TABLE_LOGIN;
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
             do {
-                History history = new History();
-                history.setTanggal(cursor.getString(0));
-                history.setJam(Integer.parseInt(cursor.getString(1)));
-                history.setKategori(cursor.getString(2));
-                history.setNama(cursor.getString(3));
-                history.setDesa(cursor.getString(4));
-
-                historyList.add(history);
+                Login buku = new Login();
+                buku.setUsername((cursor.getString(0)));
+                buku.setPassword(cursor.getString(1));
+                listLogin.add(buku);
             } while (cursor.moveToNext());
         }
 
-        // return contact list
-        return historyList;
+        return listLogin;
     }
 
+    public Login findOne(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_LOGIN, new String[]{KEY_USERNAME, KEY_PASSWORD},
+                KEY_USERNAME + "=?", new String[]{String.valueOf(id)}, null, null, null);
 
-    // static variable
-//    private static final int DATABASE_VERSION = 1;
-//
-//    // Database name
-//    private static final String DATABASE_NAME = "TallManager";
-//
-//    // table name
-//    private static final String TABLE_TALL = "talls";
-//
-//    // column tables
-//    private static final String KEY_ID = "id";
-//    private static final String KEY_NAME = "user";
-//    private static final String KEY_TALL = "tall";
-//
-//    public DataHelper(Context context){
-////        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-//
-//    }
-//
-//    //Create table
-//    @Override
-//    public void onCreate(SQLiteDatabase db) {
-//        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_TALL + "("
-//                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-//                + KEY_TALL + " TEXT" + ")";
-//        db.execSQL(CREATE_CONTACTS_TABLE);
-//    }
-//
-//    // on Upgrade database
-//    @Override
-//    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TALL);
-//        onCreate(db);
-//    }
+        if (cursor.moveToNext()) {
+            cursor.moveToFirst();
+            return new Login((cursor.getString(0)), cursor.getString(1));
+        } else {
+            return new Login("username", "haduh");
+        }
 
+    }
+
+    public String cekLogin() {
+        String hasil = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_LOGIN, new String[]{"*"},
+                null,
+                null, null, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                hasil = cursor.getString(0);
+            } else {
+                hasil = "none";
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return hasil;
+    }
+
+    public void clearLogin(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.delete(TABLE_LOGIN, null, null);
+        db.close();
+    }
 }

@@ -21,9 +21,9 @@ public class Historia extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historia);
-
-        DataHelper dbh = new DataHelper(getApplicationContext());
-        list = dbh.getAllRecord();
+//
+//        DataHelper dbh = new DataHelper(getApplicationContext());
+//        list = dbh.getAllRecord();
 
 
     }

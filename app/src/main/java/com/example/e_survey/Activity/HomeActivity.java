@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.e_survey.DatabaseLokal.DataHelper;
 import com.example.e_survey.R;
 import com.example.e_survey.Util.SharedPreferenceCustom;
 
@@ -75,6 +76,11 @@ public class HomeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch (i) {
                             case DialogInterface.BUTTON_POSITIVE:
+                                DataHelper db = new DataHelper(getApplicationContext());
+                                db.clearLogin();
+                                finish();
+                                Intent inte = new Intent(HomeActivity.this, LoginActivity.class);
+                                startActivity(inte);
                                 finish();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -97,6 +103,11 @@ public class HomeActivity extends AppCompatActivity {
                 switch (i) {
                     case DialogInterface.BUTTON_POSITIVE:
                         finish();
+                        DataHelper db = new DataHelper(getApplicationContext());
+                        db.clearLogin();
+                        finish();
+                        Intent inte = new Intent(HomeActivity.this, LoginActivity.class);
+                        startActivity(inte);
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
                         break;
@@ -106,5 +117,13 @@ public class HomeActivity extends AppCompatActivity {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setMessage("Apakah Anda yakin?").setPositiveButton("Iya", dialogClicker).setNegativeButton("Tidak", dialogClicker).show();
+    }
+
+    public void logout(View v){
+        DataHelper db = new DataHelper(getApplicationContext());
+        db.clearLogin();
+        finish();
+        Intent inte = new Intent(HomeActivity.this, LoginActivity.class);
+        startActivity(inte);
     }
 }

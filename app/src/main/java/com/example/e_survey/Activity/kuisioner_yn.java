@@ -47,27 +47,61 @@ public class kuisioner_yn extends AppCompatActivity {
         rb2 = findViewById(R.id.rb_cek2);
     }
 
-    public void cek(View v) {
-        if (rb1.isChecked()) {
-            rb2.setChecked(false);
-            jawaban = "Benar";
-        }
-        if (rb2.isChecked()) {
-            rb1.setChecked(false);
-            jawaban = "Salah";
+    public void cek1(View v) {
+        rb2.setChecked(false);
+        jawaban = "Benar";
+    }
+
+    public void cek2(View v){
+        rb1.setChecked(false);
+        jawaban = "Salah";
+    }
+
+    public void cekJump() {
+        JSONObject objData = Soal.listObj.get(Soal.parameter);
+        try {
+            String nomorJump = "";
+            if (rb1.isChecked()) {
+                nomorJump = objData.getString("pilihanYes_jump");
+            } else if (rb2.isChecked()) {
+                nomorJump = objData.getString("pilihanNo_jump");
+            }
+
+            Log.d("TAG :  ", nomorJump);
+
+            if(!nomorJump.equals("-")){
+                for (int a = Soal.parameter; a < Soal.listObj.size(); a++) {
+                    JSONObject get = Soal.listObj.get(a);
+                    String idJump = get.getString("id_kuisioner");
+                    if (idJump.equals(nomorJump)) {
+                        Soal.parameter = a;
+                        break;
+                    }
+                }
+            }else{
+                finish();
+                Intent intent = new Intent(kuisioner_yn.this, HomeActivity.class);
+                startActivity(intent);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
     public void narikData(View view) {
+        cekJump();
+
         Soal.listJawab.add(jawaban);
         Soal.listCode.add(getIntent().getStringExtra("kode_soal"));
 
-        Log.d("Tag Kode Soal : " , getIntent().getStringExtra("kode_soal"));
-        Log.d("Tag Jawaban : " , jawaban);
+        Log.d("Tag Kode Soal : ", getIntent().getStringExtra("kode_soal"));
+        Log.d("Tag Jawaban : ", jawaban);
 
         if ((Soal.listObj.size()) != (Soal.parameter)) {
             try {
                 JSONObject objData = Soal.listObj.get(Soal.parameter);
+
                 Soal.parameter++;
                 String getJenisJawbaan = objData.getString("jenis_pertanyaan");
                 if (getJenisJawbaan.equals("isian")) {
