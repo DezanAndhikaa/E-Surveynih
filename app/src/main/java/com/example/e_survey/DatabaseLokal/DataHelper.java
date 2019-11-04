@@ -8,8 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.e_survey.Model.Cache.DataKios;
 import com.example.e_survey.Model.Cache.Draft;
 import com.example.e_survey.Model.Cache.Kuesioner;
-import com.example.e_survey.Model.Cache.Log;
+import com.example.e_survey.Model.Cache.Logs;
 import com.example.e_survey.Model.Cache.Login;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class DataHelper extends SQLiteOpenHelper {
     private static final String TABLE_KUESIONER = "tableKuesioner";
     private static final String KEY_KUESIONER = "kuesioner";
 
-    //Table Log
+    //Table Logs
     private static final String TABLE_LOG = "tableLog";
     private static final String KEY_NamaAksi = "namaAksi";
     private static final String KEY_TanggalAksi = "tanggalAksi";
@@ -133,12 +134,38 @@ public class DataHelper extends SQLiteOpenHelper {
         return hasil;
     }
 
+
+    public String cekId() {
+        String hasil = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_LOGIN, new String[]{"*"},
+                null,
+                null, null, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                hasil = cursor.getString(1);
+            } else {
+                hasil = "none";
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return hasil;
+    }
+
     public void clearLogin(){
         SQLiteDatabase db=this.getWritableDatabase();
         db.delete(TABLE_LOGIN, null, null);
         db.close();
     }
 
+    public void clearDraft(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.delete(TABLE_DRAFT, null, null);
+        db.close();
+    }
 
     //Chekcing Kios
     public void saveKios(DataKios data) {
@@ -296,8 +323,8 @@ public class DataHelper extends SQLiteOpenHelper {
         return datakios;
     }
 
-    //Chekcing Log
-    public void saveLog(Log data) {
+    //Chekcing Logs
+    public void saveLog(Logs data) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NamaAksi, data.getKEY_NamaAksi());
@@ -331,8 +358,8 @@ public class DataHelper extends SQLiteOpenHelper {
         return hasil;
     }
 
-    public List<Log> findAllLog() {
-        List<Log> datakios = new ArrayList<Log>();
+    public List<Logs> findAllLog() {
+        List<Logs> datakios = new ArrayList<Logs>();
         String query = "SELECT * FROM " + TABLE_LOG;
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -340,7 +367,7 @@ public class DataHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Log buku = new Log();
+                Logs buku = new Logs();
                 buku.setKEY_NamaAksi((cursor.getString(0)));
                 buku.setKEY_NamaDesa((cursor.getString(1)));
                 buku.setKEY_TanggalAksi((cursor.getString(2)));
@@ -350,5 +377,14 @@ public class DataHelper extends SQLiteOpenHelper {
         }
 
         return datakios;
+    }
+
+    public int getTotalDraft() {
+        String countQuery = "SELECT  * FROM " + TABLE_DRAFT;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
     }
 }

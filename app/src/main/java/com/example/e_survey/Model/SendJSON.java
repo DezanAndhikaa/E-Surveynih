@@ -20,6 +20,7 @@ import org.json.JSONException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -127,7 +128,7 @@ public class SendJSON {
         Soal.parameter = 0;
     }
 
-    public void PostJSONKeltan() throws JSONException {
+    public void PostJSONKeltan(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://survey-kartutani.com/api/tambah_hasilkeltan",
                 new Response.Listener<String>() {
                     @Override
@@ -161,20 +162,11 @@ public class SendJSON {
             }
         };
 
-        Log.d("tag: ", currentTime.toString());
-        History history = new History();
-        history.setTanggal(currentTime.toString());
-        history.setJam(12);
-        history.setKategori(Soal.kategoriKuis);
-        history.setNama(Soal.jsonIdentitas.getString("nama_klmpk_tani"));
-        try {
-//            dataHelper.addRecord(history);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
         Soal.parameter = 0;
+
+
     }
 
     public void PostJSONPenyuluh() {
@@ -202,6 +194,173 @@ public class SendJSON {
                 params.put("id_fascam", Soal.idManagement);
                 params.put("responden_penyuluh", Soal.jsonIdentitas.toString());
                 params.put("jawaban_penyuluh", fetchJawaban());
+                return params;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+        Soal.parameter = 0;
+    }
+
+    public void PostJSONPetani(String res, String jaw) {
+        final String resp = res;
+        final String jawb = jaw;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://survey-kartutani.com/api/tambah_hasilpetani",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            Log.d("TAG E: ", response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("TAG E: ", error.getMessage());
+                    }
+
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id_fascam", Soal.idManagement);
+                params.put("responden_petani", resp);
+                params.put("jawaban_petani", jawb);
+                return params;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+        };
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+        Soal.parameter = 0;
+    }
+
+    public void PostJSONKios(String res, String jaw) {
+        final String resp = res;
+        final String jawb = jaw;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://survey-kartutani.com/api/tambah_hasilkios",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            Log.d("TAG E: ", response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("TAG E: ", error.getMessage());
+                    }
+
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id_fascam", Soal.idManagement);
+                params.put("responden_kios", resp);
+                params.put("jawaban_kios", jawb);
+                return params;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+        Soal.parameter = 0;
+    }
+
+    public void PostJSONKeltan(String res, String jaw) {
+        final String resp = res;
+        final String jawb = jaw;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://survey-kartutani.com/api/tambah_hasilkeltan",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            Log.d("TAG E: ", response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("TAG E: ", error.getMessage());
+                    }
+
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id_fascam", Soal.idManagement);
+                params.put("responden_keltan", resp);
+                params.put("jawaban_keltan", jawb);
+                return params;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+        Soal.parameter = 0;
+
+
+    }
+
+    public void PostJSONPenyuluh(String res, String jaw) {
+        final String resp = res;
+        final String jawb = jaw;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://survey-kartutani.com/api/tambah_hasilpenyuluh",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            Log.d("TAG E: ", response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("TAG E: ", error.getMessage());
+                    }
+
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id_fascam", Soal.idManagement);
+                params.put("responden_penyuluh", resp);
+                params.put("jawaban_penyuluh", jawb);
                 return params;
             }
 

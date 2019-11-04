@@ -3,6 +3,8 @@ package com.example.e_survey.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;;
@@ -10,6 +12,7 @@ import android.view.View;;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,8 +27,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.e_survey.DatabaseLokal.DataHelper;
 import com.example.e_survey.Model.Cache.DataKios;
+import com.example.e_survey.Model.Cache.Draft;
 import com.example.e_survey.Model.Cache.Kuesioner;
-import com.example.e_survey.Model.Lokasi.Kios;
+import com.example.e_survey.Model.SendJSON;
 import com.example.e_survey.R;
 import com.example.e_survey.Util.Constant;
 import com.example.e_survey.Util.SharedPreferenceCustom;
@@ -67,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             Log.d("DB Kuesioner: ", dbHelper.cekKuesioner());
         }
-
+        sendDraft();
         Log.d("id ", Soal.idManagement);
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
         tv_toolbar = findViewById(R.id.tv_toolbar);
@@ -167,7 +171,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void setKios() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constant.KIOS_URL + Soal.idManagement,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constant.KIOS_URL + dbHelper.cekLogin(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -221,5 +225,41 @@ public class HomeActivity extends AppCompatActivity {
         });
         req.add(request);
 
+    }
+
+    public void sendDraft() {
+        SendJSON send = new SendJSON(getApplicationContext());
+        if (dbHelper.getTotalDraft() > 0) {
+            boolean connected = false;
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+
+                List<Draft> listBuku = dbHelper.findAllDraft();
+                for (Draft b : listBuku) {
+                    if (b.getKategori().equals("Petani")) {
+                        send.PostJSONPetani(b.getJsonResponden(), b.getJsonJawaban());
+                    } else if (b.getKategori().equals("Penyuluh")) {
+                        send.PostJSONPenyuluh(b.getJsonResponden(), b.getJsonJawaban());
+                    } else if (b.getKategori().equals("Kelompok Tani")) {
+                        send.PostJSONKeltan(b.getJsonResponden(), b.getJsonJawaban());
+                    } else if (b.getKategori().equals("Kios")) {
+                        send.PostJSONKios(b.getJsonResponden(), b.getJsonJawaban());
+                    }
+                }
+
+                dbHelper.clearDraft();
+                Toast.makeText(getApplicationContext(), "Koneksi Terdeteksi!\nDraft Terupload!", Toast.LENGTH_SHORT).show();
+
+
+            } else {
+                connected = false;
+            }
+        }
+    }
+
+    public void goLog(View v) {
+        Intent intent = new Intent(HomeActivity.this, Historia.class);
+        startActivity(intent);
     }
 }

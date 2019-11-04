@@ -2,6 +2,7 @@ package com.example.e_survey.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -13,6 +14,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.e_survey.DatabaseLokal.DataHelper;
 import com.example.e_survey.R;
 import com.example.e_survey.Util.SharedPreferenceCustom;
@@ -20,6 +27,8 @@ import com.example.e_survey.Util.SharedPreferenceCustom;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.example.e_survey.Util.Constant.KUESRB_URL;
 
 public class FormPenyuluhActivity extends AppCompatActivity {
 
@@ -30,7 +39,6 @@ public class FormPenyuluhActivity extends AppCompatActivity {
     RadioButton rdButton,rdDesa,rdTani;
     SharedPreferenceCustom sharedPreferenceCustom;
     private RadioButton rdJumlahDesa, rdKlmpkTani;
-    DataHelper dbs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,14 @@ public class FormPenyuluhActivity extends AppCompatActivity {
                 } else if (inNoHP.getText().toString().equals("")) {
                     inNoHP.setError("Masukkan Nomor HP!");
                     Toast.makeText(getApplicationContext(), "\t\t\t\tNomor HP\n tidak boleh kososng", Toast.LENGTH_SHORT).show();
+                } else if (rdTani.isChecked() == false && rdDesa.isChecked() == false) {
+                    Toast.makeText(getApplicationContext(), "Pilih salah satu!", Toast.LENGTH_SHORT).show();
+                } else if (rdDesa.isChecked() == true && inJumlahDesa.getText().toString().equals("")) {
+                    inJumlahDesa.setError("Masukkan Jumlah Desa!");
+                    Toast.makeText(getApplicationContext(), "\t\t Jumlah Desa\n tidak boleh kososng", Toast.LENGTH_SHORT).show();
+                } else if (rdTani.isChecked() == true && inKlmpkTani.getText().toString().equals("")) {
+                    inKlmpkTani.setError("Masukkan Jumlah Kelompok Tani!");
+                    Toast.makeText(getApplicationContext(), "Jumlah Kelompok Tani\n tidak boleh kososng", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         int selectedID = rdGroup.getCheckedRadioButtonId();
@@ -108,6 +124,7 @@ public class FormPenyuluhActivity extends AppCompatActivity {
 
     void narikData2() {
         Soal.listObj.clear();
+        DataHelper dbs = new DataHelper(getApplicationContext());
         try {
             JSONArray data = new JSONArray(dbs.cekKuesioner());
             Soal.parameter++;
@@ -115,11 +132,13 @@ public class FormPenyuluhActivity extends AppCompatActivity {
             for (int a = 0; a < data.length(); a++) {
                 JSONObject oData = data.getJSONObject(a);
                 String kategori = oData.getString("nama_kategori_kuisioner");
+                if (kategori.equals("Penyuluh")) {
+                    Log.d("kate", kategori);
 
-                if (kategori.equals("Petani")) {
                     Soal.listObj.add(oData);
                 }
             }
+
 
             JSONObject objData = Soal.listObj.get(0);
 

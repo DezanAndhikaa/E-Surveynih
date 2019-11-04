@@ -94,7 +94,34 @@
                     android:layout_marginBottom="7dp"
                     android:paddingLeft="10dp"
                     android:textSize="8pt"
-                    android:text="Alamat"/>
+                    android:text="Usia"/>
+                <EditText
+                    android:id="@+id/inUsiaPetani"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:background="@drawable/text_round"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="8pt"
+                    android:text="Alamat Petani"/>
                 <EditText
                     android:id="@+id/inAlamat"
                     android:layout_width="match_parent"
@@ -122,7 +149,7 @@
                     android:textSize="8pt"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="No HP"/>
+                    android:text="No HP Petani"/>
                 <EditText
                     android:id="@+id/inNoHP"
                     android:layout_width="match_parent"

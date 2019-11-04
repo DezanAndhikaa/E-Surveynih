@@ -38,7 +38,7 @@
                     android:textSize="8pt"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="Nama"/>
+                    android:text="Nama Penyuluh"/>
                 <EditText
                     android:id="@+id/inNamaPenyuluh"
                     android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                     android:layout_marginBottom="7dp"
                     android:paddingLeft="10dp"
                     android:textSize="8pt"
-                    android:text="Alamat"/>
+                    android:text="Alamat Penyuluh"/>
                 <EditText
                     android:id="@+id/inAlamat"
                     android:layout_width="match_parent"
@@ -93,7 +93,7 @@
                     android:textSize="8pt"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="No HP"/>
+                    android:text="No Hp Penyuluh"/>
                 <EditText
                     android:id="@+id/inNoHP"
                     android:layout_width="match_parent"

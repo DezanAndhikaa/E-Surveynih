@@ -36,29 +36,26 @@ import static com.example.e_survey.Util.Constant.KUESRB_URL;
 
 public class FormPetaniActivity extends AppCompatActivity {
 
-    EditText inIDTani, inNamaPetani, inAlamat, inNoHP, inDesa, inLuasLahan, inStatusLahan, inKlmpkTani, inKomoditas;
+    EditText inIDTani, inNamaPetani, inUsiaPetani, inAlamat, inNoHP, inDesa, inLuasLahan, inStatusLahan, inKlmpkTani, inKomoditas;
     Button btnNext;
     TextView tv_toolbar;
     SharedPreferenceCustom sharedPreferenceCustom;
     DataHelper dbs;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_petani);
-         dbs = new DataHelper(getApplicationContext());
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
         initFindView();
         hideKeyboardFrom();
-        Log.d("Kios : ", dbs.cekKios());
-        Log.d("Kuesioner : ", dbs.cekKuesioner());
-
+        dbs = new DataHelper(getApplicationContext());
     }
 
     private void initFindView() {
         inIDTani = findViewById(R.id.inIDTani);
         inNamaPetani = findViewById(R.id.inNamaPetani);
+        inUsiaPetani = findViewById(R.id.inUsiaPetani);
         inAlamat = findViewById(R.id.inAlamat);
         inNoHP = findViewById(R.id.inNoHP);
         inDesa = findViewById(R.id.inDesa);
@@ -80,6 +77,9 @@ public class FormPetaniActivity extends AppCompatActivity {
                 } else if (inNamaPetani.getText().toString().equals("")) {
                     inNamaPetani.setError("Masukkan Nama Petani!");
                     Toast.makeText(getApplicationContext(), "\t\t\t\t Nama Petani\nTani tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                } else if (inNamaPetani.getText().toString().equals("")) {
+                    inNamaPetani.setError("Masukkan Usia Petani!");
+                    Toast.makeText(getApplicationContext(), "\t\t\t\t Usia Petani\nTani tidak boleh kosong", Toast.LENGTH_SHORT).show();
                 } else if (inAlamat.getText().toString().equals("")) {
                     inAlamat.setError("Masukkan Alamat!");
                     Toast.makeText(getApplicationContext(), "\t\t\t\t\tAlamat\n tidak boleh kosong", Toast.LENGTH_SHORT).show();
@@ -105,6 +105,7 @@ public class FormPetaniActivity extends AppCompatActivity {
                     try {
                         Soal.jsonIdentitas.put("id_petani", inIDTani.getText().toString());
                         Soal.jsonIdentitas.put("nama_petani", inNamaPetani.getText().toString());
+                        Soal.jsonIdentitas.put("usia_petani", inUsiaPetani.getText().toString());
                         Soal.jsonIdentitas.put("alamat", inAlamat.getText().toString());
                         Soal.jsonIdentitas.put("no_hp", inNoHP.getText().toString());
                         Soal.jsonIdentitas.put("nama_desa", inDesa.getText().toString());
@@ -128,6 +129,7 @@ public class FormPetaniActivity extends AppCompatActivity {
     }
 
     void narikData2() {
+        Log.d("soal", dbs.cekKuesioner());
         Soal.listObj.clear();
         try {
             JSONArray data = new JSONArray(dbs.cekKuesioner());

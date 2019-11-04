@@ -25,14 +25,13 @@ import org.json.JSONObject;
 public class FormKelompokTaniActivity extends AppCompatActivity {
 
     Button btnNext;
-    EditText inNamaKlmpkTani, inKetuaKlmpkTani, inLuasLahan, inKomoditasUtama, inJlhAnggota;
+    EditText inNamaKlmpkTani, inKetuaKlmpkTani, inTahunKeltan, inLuasLahan, inKomoditasUtama, inJlhAnggota;
     TextView tv_toolbar;
     RadioGroup rdGroup;
     RadioButton rdButton, rb_tani1, rb_tani2;
     SharedPreferenceCustom sharedPreferenceCustom;
     private RadioButton rbkeltan1, rbkeltan2;
     DataHelper dbs;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +41,7 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
         hideKeyboardFrom();
         rb_tani1 = findViewById(R.id.rb_tani1);
         rb_tani2 = findViewById(R.id.rb_tani2);
+        dbs= new DataHelper(getApplicationContext());
     }
 
     private void initFindView() {
@@ -49,6 +49,7 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
         inKetuaKlmpkTani = findViewById(R.id.inKetuaKlmpkTani);
         inLuasLahan = findViewById(R.id.inLuasLahan);
         rdGroup = findViewById(R.id.rdGroup);
+        inTahunKeltan = findViewById(R.id.inTahun);
         inKomoditasUtama = findViewById(R.id.inKomoditasUtama);
         inJlhAnggota = findViewById(R.id.inJlhAnggota);
         tv_toolbar = findViewById(R.id.tv_toolbar);
@@ -67,6 +68,9 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
                 } else if (inLuasLahan.getText().toString().equals("")) {
                     inLuasLahan.setError("Masukkan Luas Lahan!");
                     Toast.makeText(getApplicationContext(), "\t\t\t\tLuas Lahan\n tidak boleh kososng", Toast.LENGTH_SHORT).show();
+                } else if (inTahunKeltan.getText().toString().equals("")) {
+                    inTahunKeltan.setError("Masukkan Tahun Pembentukan Kelompok!");
+                    Toast.makeText(getApplicationContext(), "\tKomoditas Utama\n tidak boleh kososng", Toast.LENGTH_SHORT).show();
                 } else if (inKomoditasUtama.getText().toString().equals("")) {
                     inKomoditasUtama.setError("Masukkan Komoditas Utama!");
                     Toast.makeText(getApplicationContext(), "\tKomoditas Utama\n tidak boleh kososng", Toast.LENGTH_SHORT).show();
@@ -86,6 +90,8 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
                         } else if (selectedID == 2) {
                             Soal.jsonIdentitas.put("status_klmpk_tani", rdButton.getText().toString());
                         }
+                        Soal.jsonIdentitas.put("TahunPembentukanKelompok", inTahunKeltan.getText().toString());
+                        Soal.jsonIdentitas.put("KomoditasUtama", inKomoditasUtama.getText().toString());
                         narikData2();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -102,11 +108,6 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    public void checkButton(View view) {
-        int selectedID = rdGroup.getCheckedRadioButtonId();
-        rdButton = findViewById(selectedID);
-    }
-
     void narikData2() {
         Soal.listObj.clear();
         try {
@@ -117,7 +118,7 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
                 JSONObject oData = data.getJSONObject(a);
                 String kategori = oData.getString("nama_kategori_kuisioner");
 
-                if (kategori.equals("Petani")) {
+                if (kategori.equals("Kelompok Tani")) {
                     Soal.listObj.add(oData);
                 }
             }

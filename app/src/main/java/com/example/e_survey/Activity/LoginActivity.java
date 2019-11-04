@@ -44,8 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dbHelper = new DataHelper(this);
 
-
-
         setContentView(R.layout.activity_login);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -54,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferenceCustom = SharedPreferenceCustom.getInstance(this);
 
         if(!dbHelper.cekLogin().equals("none")){
-            Soal.idManagement = dbHelper.cekLogin();
+            Soal.idManagement = dbHelper.cekId();
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
 
             startActivity(intent);
@@ -95,9 +93,9 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jData = new JSONObject(dataNih);
                             if (error.equals("false")) {
                                 sharedPreferenceCustom.putSharedPref(Constant.USERNAME, username);
-                                Soal.idManagement = jData.getString("username");
+                                Soal.idManagement = jData.getString("id_management");
 
-                                dbHelper.save(new Login(username,password));
+                                dbHelper.save(new Login(username,Soal.idManagement));
 
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);

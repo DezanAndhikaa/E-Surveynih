@@ -65,7 +65,7 @@
                     android:textSize="8pt"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="Nama Pemilik/Pengelola"/>
+                    android:text="Nama Pemilik"/>
                 <EditText
                     android:id="@+id/inNamaPengelola"
                     android:layout_width="match_parent"
@@ -205,7 +205,7 @@
                     android:textSize="8pt"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="Jumlah Kelompok Tani"/>
+                    android:text="Jumlah Kelompok Tani yang Dilayani"/>
                 <RadioGroup
                     android:id="@+id/rdGroup"
                     android:layout_width="match_parent"
@@ -245,10 +245,67 @@
                     android:textSize="8pt"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="Rata-rata Penyaluran Per Minggu/Bulan"/>
+                    android:text="Rata-rata Penyaluran Per Minggu"/>
                 <EditText
                     android:id="@+id/inAvgPenyaluran"
                     android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:background="@drawable/text_round"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Tahun Berdiri Kios"/>
+                <EditText
+                    android:id="@+id/inTahunKios"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:background="@drawable/text_round"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="8pt"
+                    android:maxLines="2"
+                    android:text="Melayani Penyaluran Pupuk Bersubsidi Sejak Tahun "/>
+                <EditText
+                    android:id="@+id/inThnPenyaluran"
+                    android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:layout_marginRight="16dp"
                     android:paddingLeft="5dp"

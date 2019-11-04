@@ -152,7 +152,7 @@
                             android:onClick="taniButtonA"
                             android:id="@+id/rb_tani1"
                             android:checked="true"/>
-                      
+
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -164,6 +164,35 @@
 
                     </LinearLayout>
                 </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Tahun Pembentukan Kelompok Tani"/>
+                <EditText
+                    android:id="@+id/inTahun"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="8pt"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:background="@drawable/text_round"/>
+
             </LinearLayout>
 
             <LinearLayout

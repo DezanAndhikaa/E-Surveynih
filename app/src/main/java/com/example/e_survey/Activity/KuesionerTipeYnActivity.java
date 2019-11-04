@@ -167,7 +167,7 @@ public class KuesionerTipeYnActivity extends AppCompatActivity {
 //                        //initKirimJawaban();
 //                    } else {
 //                        String selected = ((RadioButton) findViewById(radioGroup.getCheckedRadioButtonId())).getTag().toString();
-//                        Log.d("cek", selected.substring(selected.indexOf("-") + 1, selected.length()));
+//                        Logs.d("cek", selected.substring(selected.indexOf("-") + 1, selected.length()));
 //                        arrayListPilihanKode.add(arrayListKode.get(position));
 //                        arrayListPilihanJawaban.add(selected.substring(0,selected.indexOf("-")));
 //                        radioKlik = -1;
@@ -205,10 +205,10 @@ public class KuesionerTipeYnActivity extends AppCompatActivity {
 //            JSONObject answer = new JSONObject();
 //            try {
 //                answer.put("code", arrayListPilihanKode.get(i));
-//                Log.d("tes", arrayListPilihanKode.get(i));
+//                Logs.d("tes", arrayListPilihanKode.get(i));
 //
 //                answer.put("choosen", arrayListPilihanJawaban.get(i));
-//                Log.d("tes", arrayListPilihanJawaban.get(i));
+//                Logs.d("tes", arrayListPilihanJawaban.get(i));
 //                jsonArray.put(answer);
 //            } catch (JSONException e) {
 //                //TODO Auto-generated catch block
@@ -222,7 +222,7 @@ public class KuesionerTipeYnActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 //
-//        Log.d("tes", jsonArray.toString());
+//        Logs.d("tes", jsonArray.toString());
 //        jawabanFormModel = new JawabanFormModel();
 //        jawabanFormModel.setJawaban(jsonArray.toString());
 //        json = jsonArray.toString();
