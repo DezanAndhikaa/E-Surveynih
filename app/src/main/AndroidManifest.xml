@@ -21,10 +21,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".Activity.Historia"></activity>
-        <activity android:name=".Activity.Home2" />
         <activity android:name=".Activity.kuisioner_cb" />
         <activity android:name=".Activity.kuisioner_yn" />
-        <activity android:name=".KuisPG" />
         <activity android:name=".Activity.kuisioner_pg" />
         <activity android:name=".Activity.ScanActivity" />
         <activity android:name=".Activity.FormKiosActivity" />
