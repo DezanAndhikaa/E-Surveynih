@@ -14,7 +14,7 @@ public class KuesionerTipeRbActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_list_kuesioner);
-        TextView textPertanyaan = (TextView) findViewById(R.id.tvPertanyaan2);
+//        TextView textPertanyaan = (TextView) findViewById(R.id.tvPertanyaan2);
 //        textPertanyaan.setText(getIntent().getStringExtra("soal"));
     }
 
