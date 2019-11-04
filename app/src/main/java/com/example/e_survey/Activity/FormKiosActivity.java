@@ -105,6 +105,7 @@ public class FormKiosActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Soal.kategoriKuis = "Kios";
                 narikData2();
             }
         });

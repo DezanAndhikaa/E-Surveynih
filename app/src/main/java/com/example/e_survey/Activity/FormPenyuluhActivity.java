@@ -97,6 +97,7 @@ public class FormPenyuluhActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    Soal.kategoriKuis = "Penyuluh";
                     narikData2();
                 }
             }

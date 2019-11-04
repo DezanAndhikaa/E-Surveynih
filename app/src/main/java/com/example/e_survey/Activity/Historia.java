@@ -32,7 +32,7 @@ public class Historia extends AppCompatActivity {
         Log.d("reading", "reading all data");
         List<Logs> listBuku = dbs.findAllLog();
         for (Logs b : listBuku) {
-            hasil+= "Jenis Aksi: " + b.getKEY_NamaAksi() + "\nNama Desa: "+b.getKEY_NamaDesa()+"\nTanggal Aksi: "+ b.getKEY_TanggalAksi()+"\nJam Aksi: "+b.getKEY_JamAksi()+"\n==================\n";
+            hasil+= "Jenis Aksi: " + b.getKEY_NamaAksi() + "\nNama Entitas: "+b.getKEY_NamaDesa()+"\nTanggal Aksi: "+ b.getKEY_TanggalAksi()+"\nJam Aksi: "+b.getKEY_JamAksi()+"\n==================\n";
         }
 
         text.setText(hasil);

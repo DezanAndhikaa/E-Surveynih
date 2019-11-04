@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import com.example.e_survey.Model.Cache.Logs;
 
 public class KuesionerTipeInActivity extends AppCompatActivity {
@@ -128,7 +129,7 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
-        final String time = ""+mdformat.format(calendar.getTime());
+        final String time = "" + mdformat.format(calendar.getTime());
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Upload Hasil Kuisioner?");
@@ -147,25 +148,42 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                             connected = false;
                         }
                         if (connected) {
+                            String asal = "";
                             SendJSON send = new SendJSON(getApplicationContext());
                             Log.d("Identitas : ", Soal.jsonIdentitas.toString());
                             Log.d("Jawaban : ", send.fetchJawaban());
+
                             if (Soal.kategoriKuis.equals("Petani")) {
                                 send.PostJSONPetani();
+                                try {
+                                    asal = Soal.jsonIdentitas.getString("nama_desa");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             } else if (Soal.kategoriKuis.equals("Kelompok Tani")) {
                                 send.PostJSONKeltan();
-
+                                try {
+                                    asal = Soal.jsonIdentitas.getString("nama_klmpk_tani");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             } else if (Soal.kategoriKuis.equals("Penyuluh")) {
                                 send.PostJSONPenyuluh();
+                                try {
+                                    asal = Soal.jsonIdentitas.getString("nama_penyuluh");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             } else if (Soal.kategoriKuis.equals("Kios")) {
                                 send.PostJSONKios();
+                                try {
+                                    asal = Soal.jsonIdentitas.getString("nama_desa");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
 
-                            try {
-                                dbs.saveLog(new Logs("Upload "+Soal.kategoriKuis,formattedDate, Soal.jsonIdentitas.getString("nama_desa"),time));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            dbs.saveLog(new Logs("Upload " + Soal.kategoriKuis, formattedDate, asal, time));
 
                             Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
                             startActivity(intent);
@@ -192,11 +210,35 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                     Log.d("data", "ID :" + b.getKategori() + " | JUDUL :" + b.getJsonJawaban() + " | PENULIS:" + b.getJsonResponden());
                 }
 
-                try {
-                    dbs.saveLog(new Logs("Draft "+Soal.kategoriKuis,formattedDate, Soal.jsonIdentitas.getString("nama_desa"),time));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                String asal = "";
+                if (Soal.kategoriKuis.equals("Petani")) {
+                    try {
+                        asal = Soal.jsonIdentitas.getString("nama_desa");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (Soal.kategoriKuis.equals("Kelompok Tani")) {
+                    try {
+                        asal = Soal.jsonIdentitas.getString("nama_klmpk_tani");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (Soal.kategoriKuis.equals("Penyuluh")) {
+                    try {
+                        asal = Soal.jsonIdentitas.getString("nama_penyuluh");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (Soal.kategoriKuis.equals("Kios")) {
+                    try {
+                        asal = Soal.jsonIdentitas.getString("nama_desa");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+
+
+                dbs.saveLog(new Logs("Draft " + Soal.kategoriKuis, formattedDate, asal, time));
 
                 Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
                 startActivity(intent);

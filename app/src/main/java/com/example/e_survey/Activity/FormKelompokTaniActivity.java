@@ -92,6 +92,7 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
                         }
                         Soal.jsonIdentitas.put("TahunPembentukanKelompok", inTahunKeltan.getText().toString());
                         Soal.jsonIdentitas.put("KomoditasUtama", inKomoditasUtama.getText().toString());
+                        Soal.kategoriKuis = "Kelompok Tani";
                         narikData2();
                     } catch (JSONException e) {
                         e.printStackTrace();
