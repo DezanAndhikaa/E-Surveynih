@@ -167,6 +167,12 @@ public class DataHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void clearKios(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.delete(TABLE_KIOS, null, null);
+        db.close();
+    }
+
     //Chekcing Kios
     public void saveKios(DataKios data) {
         SQLiteDatabase db = this.getWritableDatabase();

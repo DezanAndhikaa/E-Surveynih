@@ -165,6 +165,7 @@ public class HomeActivity extends AppCompatActivity {
     public void logout(View v) {
         DataHelper db = new DataHelper(getApplicationContext());
         db.clearLogin();
+        db.clearKios();
         finish();
         Intent inte = new Intent(HomeActivity.this, LoginActivity.class);
         startActivity(inte);

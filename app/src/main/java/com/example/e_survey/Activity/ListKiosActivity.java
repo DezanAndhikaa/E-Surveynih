@@ -76,6 +76,8 @@ public class ListKiosActivity extends AppCompatActivity {
 
                 JSONObject object = jsonArray.getJSONObject(i);
                 Kios kios = new Kios();
+                String dataf = object.getString("id_fascam");
+
                 String kode_qr = object.getString("kode_qr").trim();
                 String kabupaten = object.getString("kabupaten").trim();
                 String kecamatan = object.getString("kecamatan").trim();
@@ -83,6 +85,7 @@ public class ListKiosActivity extends AppCompatActivity {
                 String nama_kios = object.getString("nama_kios").trim();
                 sharedPreferenceCustom.putSharedPref(Constant.QR, kode_qr);
                 QR.hasilQR = kode_qr;
+                Soal.idFascam = dataf;
                 kios.setKode_qr(kode_qr);
                 kios.setKabupaten(kabupaten);
                 kios.setDesa(desa);

@@ -111,7 +111,7 @@ public class SendJSON {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id_fascam", Soal.idManagement);
+                params.put("id_fascam", Soal.idFascam);
                 params.put("responden_kios", Soal.jsonIdentitas.toString());
                 params.put("jawaban_kios", fetchJawaban());
                 return params;
@@ -274,7 +274,7 @@ public class SendJSON {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id_fascam", Soal.idManagement);
+                params.put("id_fascam", Soal.idFascam);
                 params.put("responden_kios", resp);
                 params.put("jawaban_kios", jawb);
                 return params;

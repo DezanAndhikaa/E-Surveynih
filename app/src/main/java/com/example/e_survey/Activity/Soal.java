@@ -11,6 +11,7 @@ public class Soal {
     public static String soal;
     public static String idManagement;
     public static String kategoriKuis;
+    public static String idFascam;
 
     public static ArrayList<JSONObject> listObj = new ArrayList<JSONObject>();
     public static JSONObject jsonIdentitas = new JSONObject();
