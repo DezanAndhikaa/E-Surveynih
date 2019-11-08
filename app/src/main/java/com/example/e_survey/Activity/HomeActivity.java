@@ -56,7 +56,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d("COY" , "tae");
+        Soal.parameter = 0;
         setContentView(R.layout.activity_home);
 
         dbHelper = new DataHelper(this);

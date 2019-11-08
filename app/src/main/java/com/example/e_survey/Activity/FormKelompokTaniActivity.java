@@ -2,6 +2,7 @@ package com.example.e_survey.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -42,6 +43,12 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
         rb_tani1 = findViewById(R.id.rb_tani1);
         rb_tani2 = findViewById(R.id.rb_tani2);
         dbs= new DataHelper(getApplicationContext());
+        if(Soal.listCode.isEmpty()){
+            Log.d("Kurang : ", "hadeh");
+        }else {
+           Soal.listJawab.clear();
+           Soal.listCode.clear();
+        }
     }
 
     private void initFindView() {
@@ -93,6 +100,7 @@ public class FormKelompokTaniActivity extends AppCompatActivity {
                         Soal.jsonIdentitas.put("TahunPembentukanKelompok", inTahunKeltan.getText().toString());
                         Soal.jsonIdentitas.put("KomoditasUtama", inKomoditasUtama.getText().toString());
                         Soal.kategoriKuis = "Kelompok Tani";
+
                         narikData2();
                     } catch (JSONException e) {
                         e.printStackTrace();

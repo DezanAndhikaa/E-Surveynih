@@ -169,7 +169,6 @@ public class kuisioner_cb extends AppCompatActivity {
                                         send.PostJSONPetani();
                                     } else if (Soal.kategoriKuis.equals("Kelompok Tani")) {
                                         send.PostJSONKeltan();
-
                                     } else if (Soal.kategoriKuis.equals("Penyuluh")) {
                                         send.PostJSONPenyuluh();
                                     } else if (Soal.kategoriKuis.equals("Kios")) {

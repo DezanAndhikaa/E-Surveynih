@@ -1,5 +1,7 @@
 package com.example.e_survey.Activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import com.example.e_survey.Model.Cache.Logs;
@@ -54,8 +57,8 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                 Soal.listJawab.add(jawaban.getText());
                 Soal.listCode.add(getIntent().getStringExtra("kode_soal"));
 
-                if ((Soal.listObj.size()) != (Soal.parameter)) {
-//                if (Soal.parameter < 3) {
+//                if ((Soal.listObj.size()) != (Soal.parameter)) {
+                if (Soal.parameter < 3) {
                     Log.d("Tag Kode Soal : ", getIntent().getStringExtra("kode_soal"));
                     Log.d("Tag Jawaban : ", jawaban.getText().toString());
                     narikData();
@@ -184,11 +187,17 @@ public class KuesionerTipeInActivity extends AppCompatActivity {
                             }
 
                             dbs.saveLog(new Logs("Upload " + Soal.kategoriKuis, formattedDate, asal, time));
-
                             Intent intent = new Intent(KuesionerTipeInActivity.this, HomeActivity.class);
                             startActivity(intent);
+                            Soal.listCode.clear();
+                            Soal.listJawab.clear();
+
+                            Soal.jsonIdentitas = new JSONObject();
+
+                            Log.d("Total", ""+Soal.listCode.size());
                             finish();
                             Toast.makeText(KuesionerTipeInActivity.this, "Berhasil Mengupload Hasil Kuesioner!", Toast.LENGTH_SHORT).show();
+//
                         } else {
                             Toast.makeText(KuesionerTipeInActivity.this, "Tidak Ada Koneksi Intetnet! Silahkan Pilih Menu Draft!", Toast.LENGTH_LONG).show();
                         }

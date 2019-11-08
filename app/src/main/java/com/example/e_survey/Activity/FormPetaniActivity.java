@@ -117,6 +117,10 @@ public class FormPetaniActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     Soal.kategoriKuis = "Petani";
+                    if(Soal.listCode.size() <0 || Soal.listJawab.size() <0){
+                        Soal.listJawab.clear();
+                        Soal.listCode.clear();
+                    }
                     narikData2();
                 }
             }

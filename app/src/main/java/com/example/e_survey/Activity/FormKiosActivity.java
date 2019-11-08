@@ -106,6 +106,11 @@ public class FormKiosActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Soal.kategoriKuis = "Kios";
+                if(Soal.listCode.isEmpty() || Soal.listJawab.isEmpty()){
+//                    Soal.listJawab.clear();
+//                    Soal.listCode.clear();
+//                    Log.d("Haduh")
+                }
                 narikData2();
             }
         });

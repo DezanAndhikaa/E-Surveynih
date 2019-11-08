@@ -98,6 +98,10 @@ public class FormPenyuluhActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     Soal.kategoriKuis = "Penyuluh";
+                    if(Soal.listCode.size() <0 || Soal.listJawab.size() <0){
+                        Soal.listJawab.clear();
+                        Soal.listCode.clear();
+                    }
                     narikData2();
                 }
             }

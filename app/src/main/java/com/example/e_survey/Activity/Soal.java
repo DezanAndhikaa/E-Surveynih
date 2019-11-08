@@ -20,4 +20,6 @@ public class Soal {
     public static List listCode = new ArrayList();
     public static List listJawab = new ArrayList();
 
+    public static String hasilJawaban;
+
 }

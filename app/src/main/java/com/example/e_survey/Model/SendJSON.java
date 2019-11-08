@@ -36,8 +36,8 @@ public class SendJSON {
     }
 
     public String fetchJawaban() {
-        String quizCode = "[";
 
+       String quizCode = "";
         for (int x = 0; x < Soal.listCode.size(); x++) {
             if (x != (Soal.listCode.size() - 1)) {
                 quizCode += "{\"code_pertanyaan\":" + "\"" + Soal.listCode.get(x) + "\",\"answer\":\"" + Soal.listJawab.get(x) + "\"},";
@@ -46,10 +46,13 @@ public class SendJSON {
             }
         }
 
+        Log.d("tage", quizCode);
+
         return quizCode;
     }
 
     public void PostJSONPetani() {
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://survey-kartutani.com/api/tambah_hasilpetani",
                 new Response.Listener<String>() {
                     @Override
@@ -289,6 +292,9 @@ public class SendJSON {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
         Soal.parameter = 0;
+        Soal.listJawab.clear();
+
+
     }
 
     public void PostJSONKeltan(String res, String jaw) {
@@ -373,6 +379,8 @@ public class SendJSON {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
         Soal.parameter = 0;
+        Soal.listJawab.clear();
+
     }
 
 }

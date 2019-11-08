@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import com.example.e_survey.Model.Cache.DataKios;
 import com.example.e_survey.Model.Cache.Draft;
 import com.example.e_survey.Model.Cache.Kuesioner;
@@ -17,7 +19,7 @@ import java.util.List;
 public class DataHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "ekartutani";
+    private static final String DATABASE_NAME = "ekartutani2";
 
     //Table Login
     private static final String TABLE_LOGIN = "tableLogin";
@@ -158,16 +160,21 @@ public class DataHelper extends SQLiteOpenHelper {
     public void clearLogin(){
         SQLiteDatabase db=this.getWritableDatabase();
         db.delete(TABLE_LOGIN, null, null);
+        db.delete(TABLE_KIOS, null, null);
+
         db.close();
+        Log.d("COY Login" , "tae");
     }
 
     public void clearDraft(){
         SQLiteDatabase db=this.getWritableDatabase();
         db.delete(TABLE_DRAFT, null, null);
         db.close();
+        Log.d("COY" , "tae");
     }
 
     public void clearKios(){
+        Log.d("COY Kios" , "tae");
         SQLiteDatabase db=this.getWritableDatabase();
         db.delete(TABLE_KIOS, null, null);
         db.close();
