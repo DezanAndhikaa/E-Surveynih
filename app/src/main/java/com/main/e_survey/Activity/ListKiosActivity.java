@@ -1,36 +1,26 @@
-package com.example.e_survey.Activity;
+package com.main.e_survey.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.e_survey.DatabaseLokal.DataHelper;
-import com.example.e_survey.Model.Lokasi.Kios;
-import com.example.e_survey.Model.QR;
-import com.example.e_survey.R;
-import com.example.e_survey.Util.Constant;
-import com.example.e_survey.Util.KiosAdapter;
-import com.example.e_survey.Util.SharedPreferenceCustom;
+import com.main.e_survey.DatabaseLokal.DataHelper;
+import com.main.e_survey.Model.Lokasi.Kios;
+import com.main.e_survey.Model.QR;
+import com.main.e_survey.R;
+import com.main.e_survey.Util.Constant;
+import com.main.e_survey.Util.KiosAdapter;
+import com.main.e_survey.Util.SharedPreferenceCustom;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class ListKiosActivity extends AppCompatActivity {
